@@ -1,0 +1,17 @@
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.csproj.AssemblyReference.cache
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.AssemblyInfoInputs.cache
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.AssemblyInfo.cs
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.csproj.CoreCompileInputs.cache
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Service.deps.json
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Service.dll
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Service.pdb
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Contracts.dll
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Service.Contracts.dll
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Contracts.pdb
+C:\Projects\.NET 6.0\Books_New\Service\bin\Debug\net7.0\Service.Contracts.pdb
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.csproj.CopyComplete
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.dll
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\refint\Service.dll
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\Service.pdb
+C:\Projects\.NET 6.0\Books_New\Service\obj\Debug\net7.0\ref\Service.dll

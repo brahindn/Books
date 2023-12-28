@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "eM89fG3/cHvPK6TSkWwcc8wyKed+LM7Sj3tP60hbqkiwY1IO9ajJreSv35nEjvJ1Be9tc0/TYnQ/Kc4E+PVoFQ==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\.NET 6.0\\Books_New\\LoggerService\\LoggerService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Деня\\.nuget\\packages\\nlog\\5.2.7\\nlog.5.2.7.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Service.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-    public class BookService
+    public class BookService : IBookService
     {
         private readonly IRepositoryManager _repositoryManager;
-        private readonly ILoggerManager _logger;
 
-        public BookService(IRepositoryManager repository, ILoggerManager logger)
+        public BookService(IRepositoryManager repository)
         {
             _repositoryManager = repository;
-            _logger = logger;
         }
     }
 }

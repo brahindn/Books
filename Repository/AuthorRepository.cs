@@ -11,6 +11,8 @@ namespace Repository
     public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
     {
         public AuthorRepository(RepositoryContext repositoryContext) 
-            : base(repositoryContext) { }
+            : base(repositoryContext)
+        {
+        }
     }
 }

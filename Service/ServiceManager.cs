@@ -15,12 +15,12 @@ namespace Service
         private readonly Lazy<IGenreService> _genreService;
         private readonly Lazy<IPublisherService> _publisherService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger)
+        public ServiceManager(IRepositoryManager repositoryManager)
         {
-            _authorService = new Lazy<IAuthorService>(() => new AuthorService(repositoryManager, logger));
-            _bookService = new Lazy<IBookService>(() => new BookService(repositoryManager, logger));
-            _genreService = new Lazy<IGenreService>(() => new GenreService(repositoryManager, logger));
-            _publisherService = new Lazy<IPublisherService>(() => new PublisherService(repositoryManager, logger));
+            _authorService = new Lazy<IAuthorService>(() => new AuthorService(repositoryManager));
+            _bookService = new Lazy<IBookService>(() => new BookService(repositoryManager));
+            _genreService = new Lazy<IGenreService>(() => new GenreService(repositoryManager));
+            _publisherService = new Lazy<IPublisherService>(() => new PublisherService(repositoryManager));
         }
 
         public IAuthorService AuthorService => _authorService.Value;

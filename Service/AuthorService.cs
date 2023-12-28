@@ -11,12 +11,10 @@ namespace Service
     public class AuthorService : IAuthorService
     {
         private readonly IRepositoryManager _repositoryManager;
-        private readonly ILoggerManager _logger;
 
-        public AuthorService(IRepositoryManager repository, ILoggerManager logger)
+        public AuthorService(IRepositoryManager repository)
         {
             _repositoryManager = repository;
-            _logger = logger;
         }
     }
 }
