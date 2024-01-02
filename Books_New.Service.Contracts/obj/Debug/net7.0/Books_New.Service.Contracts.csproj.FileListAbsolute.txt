@@ -1,0 +1,11 @@
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\bin\Debug\net7.0\Books_New.Service.Contracts.deps.json
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\bin\Debug\net7.0\Books_New.Service.Contracts.dll
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\bin\Debug\net7.0\Books_New.Service.Contracts.pdb
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\Books_New.Service.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\Books_New.Service.Contracts.AssemblyInfoInputs.cache
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\Books_New.Service.Contracts.AssemblyInfo.cs
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\Books_New.Service.Contracts.csproj.CoreCompileInputs.cache
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\Books_New.Service.Contracts.dll
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\refint\Books_New.Service.Contracts.dll
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\Books_New.Service.Contracts.pdb
+C:\Projects\.NET 6.0\Books_New\Books_New.Service.Contracts\obj\Debug\net7.0\ref\Books_New.Service.Contracts.dll

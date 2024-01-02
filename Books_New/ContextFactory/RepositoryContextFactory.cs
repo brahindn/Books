@@ -7,15 +7,16 @@ namespace Books_New.ContextFactory
 {
     public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
     {
-        private readonly IConfiguration _configuration;
-        public RepositoryContextFactory(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
         public RepositoryContext CreateDbContext(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseSqlServer(_configuration.GetConnectionString("sqlConnection"));
+                .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+                b => b.MigrationsAssembly("Books_New"));
 
             return new RepositoryContext(builder.Options);
         }

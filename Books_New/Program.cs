@@ -1,11 +1,8 @@
 ﻿using Books_New.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Repository;
 
-var builder = new ConfigurationBuilder()
-    .SetBasePath (Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+var builder = new ConfigurationBuilder();
 
 var configuration = builder.Build();
 var services = new ServiceCollection();
@@ -19,7 +16,7 @@ var serviceProvider = services.BuildServiceProvider();
 Console.WriteLine("Enter path to file");
 string path = Console.ReadLine();
 
-var repositoryBase = new RepositoryBase(File);
+//var repositoryBase = new RepositoryBase();
 
 
 
