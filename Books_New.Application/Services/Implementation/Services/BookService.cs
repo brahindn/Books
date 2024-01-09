@@ -1,5 +1,6 @@
 ﻿using Books_New.Application.Services.Contracts.Services;
 using Contracts;
+using Entities.Models;
 
 namespace Service
 {
@@ -10,6 +11,11 @@ namespace Service
         public BookService(IRepositoryManager repository)
         {
             _repositoryManager = repository;
+        }
+
+        public void CreateBook(string[] fields)
+        {
+
         }
     }
 }

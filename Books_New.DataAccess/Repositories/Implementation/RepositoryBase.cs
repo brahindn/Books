@@ -12,9 +12,14 @@ namespace Books_New.DataAccess.Repositories.Implementation
             RepositoryContext = repositoryContext;
         }
 
+        public void Create(T entity)
+        {
+            RepositoryContext.Set<T>().Add(entity);
+        }
+
         public void Update(T entity)
         {
-            RepositoryContext.Add(entity);
+            
         }
     }
 }

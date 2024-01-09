@@ -9,16 +9,17 @@ namespace Books_New.ContextFactory
     {
         public RepositoryContext CreateDbContext(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+                .AddJsonFile("appsettings.json");
 
-            var builder = new DbContextOptionsBuilder<RepositoryContext>()
+            var configuration = builder.Build();
+
+            var optionBuilder = new DbContextOptionsBuilder<RepositoryContext>()
                 .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
                 b => b.MigrationsAssembly("Books_New"));
 
-            return new RepositoryContext(builder.Options);
+            return new RepositoryContext(optionBuilder.Options);
         }
     }
 }

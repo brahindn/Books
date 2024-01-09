@@ -2,5 +2,6 @@
 {
     public interface IAuthorService
     {
+        void CreateAuthor(string field);
     }
 }
