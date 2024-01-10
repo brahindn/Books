@@ -17,7 +17,7 @@ namespace Books_New.ContextFactory
 
             var optionBuilder = new DbContextOptionsBuilder<RepositoryContext>()
                 .UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                b => b.MigrationsAssembly("Books_New"));
+                b => b.MigrationsAssembly("Books_New.Console"));
 
             return new RepositoryContext(optionBuilder.Options);
         }
