@@ -2,6 +2,6 @@
 {
     public interface IBookService
     {
-        void CreateBook(string[] fields);
+        void CreateBook(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName);
     }
 }

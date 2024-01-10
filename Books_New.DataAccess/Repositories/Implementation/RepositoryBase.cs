@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Repository;
+using System.Linq.Expressions;
 
 namespace Books_New.DataAccess.Repositories.Implementation
 {
@@ -11,6 +12,12 @@ namespace Books_New.DataAccess.Repositories.Implementation
         {
             RepositoryContext = repositoryContext;
         }
+
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+        {
+            return RepositoryContext.Set<T>().Where(expression);
+        }
+          
 
         public void Create(T entity)
         {

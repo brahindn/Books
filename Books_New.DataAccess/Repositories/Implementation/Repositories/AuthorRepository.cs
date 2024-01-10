@@ -1,7 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
 using Repository;
-using System.Runtime.InteropServices;
 
 namespace Books_New.DataAccess.Repositories.Implementation.Repositories
 {
@@ -15,6 +14,11 @@ namespace Books_New.DataAccess.Repositories.Implementation.Repositories
         public void CreateAuthor(Author author)
         {
             Create(author);
+        }
+
+        public Author GetAuthor(string name)
+        {
+            return FindByCondition(a => a.Name == name).SingleOrDefault(); 
         }
     }
 }

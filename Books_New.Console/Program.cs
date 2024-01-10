@@ -1,17 +1,7 @@
-﻿using Azure;
-using Books_New.ContextFactory;
-using Books_New.Extensions;
-using Entities.Models;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+﻿using Books_New.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Repository;
-using Service;
 using Service.Contracts;
-using System;
 
 var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -32,7 +22,7 @@ string path = Console.ReadLine();
 
 Update(path, serviceProvider);
 
-static void Update(string path, ServiceProvider servicesProvider)
+void Update(string path, ServiceProvider servicesProvider)
 {
     while (!File.Exists(path))
     {
@@ -59,14 +49,11 @@ static void Update(string path, ServiceProvider servicesProvider)
             {
                 try
                 {
-                    serviceManager.AuthorService.CreateAuthor(fields[4].ToString());
-                    Console.WriteLine($"Author: {fields[4]} has been added");
+                    serviceManager.BookService.CreateBook(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Author: {fields[4]} is duplicate!");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -75,7 +62,7 @@ static void Update(string path, ServiceProvider servicesProvider)
 
 //0-title 1-pages 2-genre 3-ReleaseData 4-Author 5-publisher
 
-static bool DataCheck(string[] fields)
+bool DataCheck(string[] fields)
 {
     if (fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParse(fields[3], out DateTime time) && fields[4] is string && fields[5] is string)
     {

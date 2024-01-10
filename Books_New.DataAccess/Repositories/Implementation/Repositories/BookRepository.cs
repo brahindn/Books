@@ -8,5 +8,10 @@ namespace Books_New.DataAccess.Repositories.Implementation.Repositories
     {
         public BookRepository(RepositoryContext repositoryContext)
             : base(repositoryContext) { }
+
+        public void CreateBook(Book book)
+        {
+            Create(book);
+        }
     }
 }

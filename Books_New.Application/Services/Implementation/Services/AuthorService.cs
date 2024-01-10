@@ -1,8 +1,6 @@
 ﻿using Books_New.Application.Services.Contracts.Services;
 using Contracts;
 using Entities.Models;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -20,6 +18,11 @@ namespace Service
             var author = new Author { Name = field };
             _repositoryManager.Author.CreateAuthor(author);
             _repositoryManager.Save();
+        }
+
+        public Author GetAuthor(string name)
+        {
+            return _repositoryManager.Author.GetAuthor(name);
         }
     }
 }

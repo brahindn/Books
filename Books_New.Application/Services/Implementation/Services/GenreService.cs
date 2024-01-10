@@ -1,5 +1,6 @@
 ﻿using Books_New.Application.Services.Contracts.Services;
 using Contracts;
+using Entities.Models;
 
 namespace Service
 {
@@ -10,6 +11,18 @@ namespace Service
         public GenreService(IRepositoryManager repository)
         {
             _repositoryManager = repository;
+        }
+
+        public void CreateGenre(string field)
+        {
+            var genre = new Genre { Name = field };
+            _repositoryManager.Genre.CreateGenre(genre);
+            _repositoryManager.Save();
+        }
+
+        public Genre GetGenre(string name)
+        {
+            return _repositoryManager.Genre.GetGenre(name);
         }
     }
 }
