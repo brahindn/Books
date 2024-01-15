@@ -51,16 +51,14 @@ void Update(string path, ServiceProvider servicesProvider)
                 {
                     serviceManager.BookService.CreateBook(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
                 }
-                catch(Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("(Something went wrong)");
                 }
             }
         }
     }
 }
-
-//0-title 1-pages 2-genre 3-ReleaseData 4-Author 5-publisher
 
 bool DataCheck(string[] fields)
 {
