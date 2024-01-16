@@ -23,10 +23,5 @@ namespace Books_New.DataAccess.Repositories.Implementation
         {
             RepositoryContext.Set<T>().Add(entity);
         }
-
-        public void Update(T entity)
-        {
-            
-        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Books_New.Application.Services.Contracts.Services;
 using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -37,6 +38,13 @@ namespace Service
 
             _repositoryManager.Book.CreateBook(book);
             _repositoryManager.Save();
+        }
+
+        public IQueryable<Book> GetBook(string name)
+        {
+            var filterBook = _repositoryManager.Book.GetBook(name);
+
+            return filterBook;
         }
     }
 }

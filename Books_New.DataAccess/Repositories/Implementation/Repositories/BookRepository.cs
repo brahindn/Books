@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repository;
 using System.Linq.Expressions;
@@ -23,6 +24,14 @@ namespace Books_New.DataAccess.Repositories.Implementation.Repositories
             var answer = FindByCondition(expression);
 
             return answer.IsNullOrEmpty() ? true : false;
+        }
+
+        public IQueryable<Book> GetBook(string name)
+        {
+            Expression<Func<Book, bool>> exception = b => b.Title.Contains(name) || b.Author.Name.Contains(name);
+            var bookList = FindByCondition(exception).Include(b => b.Author);
+
+            return bookList;
         }
     }
 }

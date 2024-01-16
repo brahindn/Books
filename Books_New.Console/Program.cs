@@ -1,4 +1,6 @@
-﻿using Books_New.Extensions;
+﻿using Books_New.Application.Services;
+using Books_New.Extensions;
+using Entities.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Service.Contracts;
@@ -7,13 +9,13 @@ var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
 
-var configuration = builder.Build();
+IConfiguration config = builder.Build();
 
 var services = new ServiceCollection();
 
 services.ConfigureRepositoryManager();
 services.ConfigureServiceManager();
-services.ConfigureSqlContext(configuration);
+services.ConfigureSqlContext(config);
 
 var serviceProvider = services.BuildServiceProvider();
 
@@ -21,6 +23,46 @@ Console.WriteLine("Enter path to file");
 string path = Console.ReadLine();
 
 Update(path, serviceProvider);
+
+var filterConditions = new FilterConditions()
+{
+    BookName = config.GetSection("FilterConditions:BookName").Get<List<string>>(),
+    AuthorName = config.GetSection("FilterConditions:AuthorName").Get<List<string>>()
+};
+
+var filterBookList = SearchingBook(filterConditions.BookName, serviceProvider);
+Console.WriteLine("Data filtered by Title:");
+ShowBooksWithFilter(filterBookList);
+
+var filterAuthorList = SearchingBook(filterConditions.AuthorName, serviceProvider);
+Console.WriteLine("Data filtered by Author:");
+ShowBooksWithFilter(filterAuthorList);
+
+
+void ShowBooksWithFilter(List<Book> list)
+{
+    foreach (var entity in list)
+    {
+        Console.WriteLine($"{entity.Title} - {entity.Author.Name}");
+    }
+
+    Console.WriteLine();
+    Console.WriteLine("Press something to continue..." + "\n");
+    Console.ReadKey();
+}
+
+List<Book> SearchingBook(List<string> filterConditions, ServiceProvider serviceProvider)
+{
+    var result = new List<Book>();
+    var serviceManager = serviceProvider.GetRequiredService<IServiceManager>();
+    
+    foreach (var bookName in filterConditions)
+    {
+        result.AddRange(serviceManager.BookService.GetBook(bookName.ToString()));
+    }
+
+    return result;
+}
 
 void Update(string path, ServiceProvider servicesProvider)
 {
@@ -58,6 +100,10 @@ void Update(string path, ServiceProvider servicesProvider)
             }
         }
     }
+
+    Console.WriteLine();
+    Console.WriteLine("Press something to continue..." + "\n");
+    Console.ReadKey();
 }
 
 bool DataCheck(string[] fields)
