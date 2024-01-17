@@ -15,6 +15,11 @@ namespace Service
 
         public void CreatePublisher(string field)
         {
+            if (string.IsNullOrEmpty(field))
+            {
+                return;
+            }
+
             var publisher = new Publisher { Name = field };
             _repositoryManager.Publisher.CreatePublisher(publisher);
             _repositoryManager.Save();

@@ -8,7 +8,7 @@ namespace Repository.Configuration
     {
         public void Configure(EntityTypeBuilder<Author> builder)
         {
-            builder.Property(a  => a.Name).IsRequired();
+            builder.Property(a => a.Name).IsRequired();
             builder.HasIndex(a => a.Name).IsUnique();
         }
     }

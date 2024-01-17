@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Service
 {
@@ -17,7 +18,13 @@ namespace Service
         public void CreateBook(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
         {
             var existBook = _repositoryManager.Book.CheckDuplicate(title, genreName, authorName, publisherName);
+
             if (!existBook)
+            {
+                return;
+            }
+
+            if(string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
             {
                 return;
             }

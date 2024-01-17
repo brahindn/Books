@@ -15,6 +15,11 @@ namespace Service
 
         public void CreateAuthor(string field)
         {
+            if(string.IsNullOrEmpty(field))
+            {
+                return;
+            }
+
             var author = new Author { Name = field };
             _repositoryManager.Author.CreateAuthor(author);
             _repositoryManager.Save();

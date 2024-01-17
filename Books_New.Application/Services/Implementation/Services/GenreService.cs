@@ -15,6 +15,11 @@ namespace Service
 
         public void CreateGenre(string field)
         {
+            if (string.IsNullOrEmpty(field))
+            {
+                return;
+            }
+
             var genre = new Genre { Name = field };
             _repositoryManager.Genre.CreateGenre(genre);
             _repositoryManager.Save();
