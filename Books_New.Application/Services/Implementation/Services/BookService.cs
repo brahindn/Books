@@ -24,7 +24,7 @@ namespace Service
                 return;
             }
 
-            if(string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
+            if(string.IsNullOrEmpty(title) || string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
             {
                 return;
             }
@@ -32,15 +32,17 @@ namespace Service
             var author = _repositoryManager.Author.GetAuthor(authorName) ?? new Author {Name = authorName};
             var genre = _repositoryManager.Genre.GetGenre(genreName) ?? new Genre { Name = genreName };
             var publisher = _repositoryManager.Publisher.GetPublisher(publisherName) ?? new Publisher {  Name = publisherName };
+            int page;
+            DateTime time;
 
             var book = new Book
             {
                 Title = title,
-                Pages = int.Parse(pages),
+                Pages = int.TryParse(pages, out page) ? page : null,
                 Genre = genre,
                 Author = author,
                 Publisher = publisher,
-                ReleaseDate = DateTime.Parse(releaseDate)
+                ReleaseDate = DateTime.TryParse(releaseDate, out time) ? time : null
             };
 
             _repositoryManager.Book.CreateBook(book);

@@ -9,7 +9,7 @@ namespace Entities.Models
         public Guid Id { get; set; }
 
         public string Title { get; set; }
-        public int Pages { get; set; }
+        public int? Pages { get; set; }
 
         public Guid AuthorId { get; set; }
         [ForeignKey("AuthorId")]
@@ -22,6 +22,6 @@ namespace Entities.Models
         public Guid PublisherId { get; set; }
         [ForeignKey("PublisherId")]
         public Publisher Publisher { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
     }
 }

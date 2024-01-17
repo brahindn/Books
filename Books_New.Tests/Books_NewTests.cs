@@ -11,7 +11,7 @@ namespace Books_New.Tests
         private readonly ServiceManager _serviceManager;
         private readonly DbContextOptions<RepositoryContext> _options;
 
-        public Books_NewTests()
+        public Books_NewTests() 
         {
            _options = new DbContextOptionsBuilder<RepositoryContext>()
                 .UseInMemoryDatabase(databaseName: "TestDatabase")
@@ -128,7 +128,7 @@ namespace Books_New.Tests
         }
 
         [TestMethod]
-        public void AddNewBookToDataBase_ItIsMethodUpdate()
+        public void AddNewBookToDataBase()
         {
             _serviceManager.BookService.CreateBook("Title", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
@@ -143,6 +143,72 @@ namespace Books_New.Tests
                 Assert.AreEqual("Horror", context.Genres.Single().Name);
                 Assert.AreEqual("Spange Bob", context.Authors.Single().Name);
                 Assert.AreEqual("City Classic", context.Publishers.Single().Name);
+            }
+        }
+
+        [TestMethod]
+        public void AddNewBookToDataBase_WithoutTitle_0Books()
+        {
+            _serviceManager.BookService.CreateBook("", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
+
+            using (var context = new RepositoryContext(_options))
+            {
+                Assert.AreEqual(0, context.Books.Count());
+            }
+        }
+
+        [TestMethod]
+        public void AddNewBookToDataBase_WithoutPages()
+        {
+            _serviceManager.BookService.CreateBook("Title", "", "Horror", "2017-12-10", "Spange Bob", "City Classic");
+
+            using (var context = new RepositoryContext(_options))
+            {
+                Assert.AreEqual(1, context.Books.Count());
+            }
+        }
+
+        [TestMethod]
+        public void AddNewBookToDataBase_WithoutGenre_0Books()
+        {
+            _serviceManager.BookService.CreateBook("Title", "500", "", "2017-12-10", "Spange Bob", "City Classic");
+
+            using (var context = new RepositoryContext(_options))
+            {
+                Assert.AreEqual(0, context.Books.Count());
+            }
+        }
+
+        [TestMethod]
+        public void AddNewBookToDataBase_WithoutRealiseDate()
+        {
+            _serviceManager.BookService.CreateBook("Title", "500", "Horror", "", "Spange Bob", "City Classic");
+
+            using (var context = new RepositoryContext(_options))
+            {
+                Assert.AreEqual(1, context.Books.Count());
+            }
+        }
+
+        [TestMethod]
+        public void AddNewBookToDataBase_WithoutAuthor_0Books()
+        {
+            _serviceManager.BookService.CreateBook("Title", "500", "Horror", "2017-12-10", "", "City Classic");
+
+            using (var context = new RepositoryContext(_options))
+            {
+                Assert.AreEqual(0, context.Books.Count());
+            }
+        }
+
+        [TestMethod]
+        public void AddNewBookToDataBase_WithoutPublisher_0Books()
+        {
+            _serviceManager.BookService.CreateBook("", "500", "Horror", "2017-12-10", "Spange Bob", "");
+
+            using (var context = new RepositoryContext(_options))
+            {
+                Assert.AreEqual(0, context.Books.Count());
             }
         }
     }
