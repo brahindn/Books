@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Books_New.Console.Migrations
+namespace Books_New.Console
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

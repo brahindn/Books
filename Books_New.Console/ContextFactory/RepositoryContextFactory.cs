@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Books_New.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Repository;
 
-namespace Books_New.ContextFactory
+namespace Books_New.Console
 {
     public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
     {

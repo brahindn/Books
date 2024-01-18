@@ -1,13 +1,10 @@
-﻿using Contracts;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Repository;
-using Service;
-using Service.Contracts;
-using Books_New.DataAccess.Repositories.Implementation;
+using Books_New.Application;
+using Books_New.DataAccess;
 
-namespace Books_New.Extensions
+namespace Books_New.Console
 {
     public static class ServiceExtensions
     {

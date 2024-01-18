@@ -1,10 +1,10 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 
-namespace Books_New.Application.Services.Contracts.Services
+namespace Books_New.Application
 {
     public interface IGenreService
     {
-        void CreateGenre(string field);
+        void CreateGenre(string genreName);
         Genre GetGenre(string name);
     }
 }

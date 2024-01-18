@@ -1,7 +1,6 @@
-using Books_New.DataAccess.Repositories.Implementation;
+using Books_New.Application;
+using Books_New.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Repository;
-using Service;
 
 namespace Books_New.Tests
 {

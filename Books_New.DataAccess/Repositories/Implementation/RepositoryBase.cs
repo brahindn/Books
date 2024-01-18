@@ -1,8 +1,6 @@
-﻿using Contracts;
-using Repository;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Books_New.DataAccess.Repositories.Implementation
+namespace Books_New.DataAccess
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

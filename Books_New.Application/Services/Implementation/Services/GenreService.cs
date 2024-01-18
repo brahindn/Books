@@ -1,8 +1,7 @@
-﻿using Books_New.Application.Services.Contracts.Services;
-using Contracts;
-using Entities.Models;
+﻿using Books_New.DataAccess;
+using Books_New.Entities;
 
-namespace Service
+namespace Books_New.Application
 {
     public class GenreService : IGenreService
     {
@@ -13,15 +12,15 @@ namespace Service
             _repositoryManager = repository;
         }
 
-        public void CreateGenre(string field)
+        public void CreateGenre(string genreName)
         {
-            if (string.IsNullOrEmpty(field))
+            if (string.IsNullOrEmpty(genreName))
             {
                 return;
             }
 
-            var genre = new Genre { Name = field };
-            _repositoryManager.Genre.CreateGenre(genre);
+            var genre = new Genre { Name = genreName };
+            _repositoryManager.Genre.Create(genre);
             _repositoryManager.Save();
         }
 

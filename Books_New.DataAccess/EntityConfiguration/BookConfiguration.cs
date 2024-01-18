@@ -1,8 +1,8 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Books_New.DataAccess.EntityConfiguration
+namespace Books_New.DataAccess
 {
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {

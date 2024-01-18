@@ -1,10 +1,10 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 
-namespace Contracts
+namespace Books_New.DataAccess
 {
     public interface IGenreRepository
     {
-        void CreateGenre(Genre genre);
+        void Create(Genre genre);
         Genre GetGenre(string name);
     }
 }

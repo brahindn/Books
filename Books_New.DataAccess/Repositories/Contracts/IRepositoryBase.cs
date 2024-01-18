@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Contracts
+namespace Books_New.DataAccess
 {
     public interface IRepositoryBase<T>
     {

@@ -1,17 +1,12 @@
-﻿using Contracts;
-using Entities.Models;
-using Repository;
+﻿using Books_New.Entities;
 
-namespace Books_New.DataAccess.Repositories.Implementation.Repositories
+namespace Books_New.DataAccess
 {
     public class PublisherRepository : RepositoryBase<Publisher>, IPublisherRepository
     {
         public PublisherRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext) { }
-
-        public void CreatePublisher(Publisher publisher)
+            : base(repositoryContext) 
         {
-            Create(publisher);
         }
 
         public Publisher GetPublisher(string name)

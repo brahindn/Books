@@ -1,10 +1,10 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 
-namespace Contracts
+namespace Books_New.DataAccess
 {
     public interface IAuthorRepository
     {
-        void CreateAuthor(Author author);
+        void Create(Author author);
         Author GetAuthor(string name);
     }
 }

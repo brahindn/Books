@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Books_New.Console.Migrations
+namespace Books_New.Console
 {
     /// <inheritdoc />
     public partial class IndexHasAddedForBooks : Migration

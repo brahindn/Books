@@ -1,8 +1,7 @@
-﻿using Books_New.Application.Services.Contracts.Services;
-using Contracts;
-using Entities.Models;
+﻿using Books_New.DataAccess;
+using Books_New.Entities;
 
-namespace Service
+namespace Books_New.Application
 {
     public class PublisherService : IPublisherService
     {
@@ -13,15 +12,15 @@ namespace Service
             _repositoryManager = repository;
         }
 
-        public void CreatePublisher(string field)
+        public void CreatePublisher(string publisherName)
         {
-            if (string.IsNullOrEmpty(field))
+            if (string.IsNullOrEmpty(publisherName))
             {
                 return;
             }
 
-            var publisher = new Publisher { Name = field };
-            _repositoryManager.Publisher.CreatePublisher(publisher);
+            var publisher = new Publisher { Name = publisherName };
+            _repositoryManager.Publisher.Create(publisher);
             _repositoryManager.Save();
         }
 

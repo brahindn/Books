@@ -1,8 +1,7 @@
-﻿using Books_New.Application.Services.Contracts.Services;
-using Contracts;
-using Entities.Models;
+﻿using Books_New.DataAccess;
+using Books_New.Entities;
 
-namespace Service
+namespace Books_New.Application
 {
     public class AuthorService : IAuthorService
     {
@@ -13,15 +12,15 @@ namespace Service
             _repositoryManager = repository;
         }
 
-        public void CreateAuthor(string field)
+        public void CreateAuthor(string authorName)
         {
-            if(string.IsNullOrEmpty(field))
+            if(string.IsNullOrEmpty(authorName))
             {
                 return;
             }
 
-            var author = new Author { Name = field };
-            _repositoryManager.Author.CreateAuthor(author);
+            var author = new Author { Name = authorName };
+            _repositoryManager.Author.Create(author);
             _repositoryManager.Save();
         }
 

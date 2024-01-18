@@ -1,10 +1,10 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 
-namespace Contracts
+namespace Books_New.DataAccess
 {
     public interface IPublisherRepository
     {
-        void CreatePublisher(Publisher publisher);
+        void Create(Publisher publisher);
         Publisher GetPublisher(string name);
     }
 }

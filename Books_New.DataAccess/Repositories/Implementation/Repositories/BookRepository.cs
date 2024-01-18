@@ -1,20 +1,15 @@
-﻿using Contracts;
-using Entities.Models;
+﻿using Books_New.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Repository;
 using System.Linq.Expressions;
 
-namespace Books_New.DataAccess.Repositories.Implementation.Repositories
+namespace Books_New.DataAccess
 {
     public class BookRepository : RepositoryBase<Book>, IBookRepository
     {
         public BookRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext) { }
-
-        public void CreateBook(Book book)
+            : base(repositoryContext) 
         {
-            Create(book);
         }
 
         public bool CheckDuplicate(string title, string genreName, string authorName, string publisherName)

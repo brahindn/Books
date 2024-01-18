@@ -1,9 +1,7 @@
-﻿using Books_New.DataAccess.EntityConfiguration;
-using Entities.Models;
+﻿using Books_New.Entities;
 using Microsoft.EntityFrameworkCore;
-using Repository.Configuration;
 
-namespace Repository
+namespace Books_New.DataAccess
 {
     public class RepositoryContext : DbContext
     {

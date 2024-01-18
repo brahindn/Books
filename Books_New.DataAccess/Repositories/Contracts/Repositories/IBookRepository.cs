@@ -1,10 +1,10 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 
-namespace Contracts
+namespace Books_New.DataAccess
 {
     public interface IBookRepository
     {
-        void CreateBook(Book book);
+        void Create(Book book);
         bool CheckDuplicate(string title, string genreName, string authorName, string publisherName);
         IQueryable<Book> GetBook(string name);
     }

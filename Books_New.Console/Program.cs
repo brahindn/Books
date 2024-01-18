@@ -1,9 +1,8 @@
-﻿using Books_New.Application.Services;
-using Books_New.Extensions;
-using Entities.Models;
+﻿using Books_New.Application;
+using Books_New.Console;
+using Books_New.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Service.Contracts;
 
 var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -22,7 +21,7 @@ var serviceProvider = services.BuildServiceProvider();
 Console.WriteLine("Enter path to file");
 string path = Console.ReadLine();
 
-Update(path, serviceProvider);
+PopulateDatabaseFromFile(path, serviceProvider);
 
 var filterConditions = new FilterConditions()
 {
@@ -64,7 +63,7 @@ List<Book> SearchingBook(List<string> filterConditions, ServiceProvider serviceP
     return result;
 }
 
-void Update(string path, ServiceProvider servicesProvider)
+void PopulateDatabaseFromFile(string path, ServiceProvider servicesProvider)
 {
     while (!File.Exists(path))
     {
@@ -108,13 +107,5 @@ void Update(string path, ServiceProvider servicesProvider)
 
 bool DataCheck(string[] fields)
 {
-    if (fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParse(fields[3], out DateTime time) && fields[4] is string && fields[5] is string)
-    {
-        return true;
-    }
-
-    return false;
+    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParse(fields[3], out DateTime time) && fields[4] is string && fields[5] is string;
 }
-
-
-

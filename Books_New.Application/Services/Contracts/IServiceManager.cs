@@ -1,7 +1,5 @@
-﻿using Books_New.Application.Services.Contracts.Services;
-
-namespace Service.Contracts
-{
+﻿namespace Books_New.Application
+{ 
     public interface IServiceManager
     {
         IAuthorService AuthorService { get; }   

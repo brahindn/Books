@@ -1,17 +1,12 @@
-﻿using Contracts;
-using Entities.Models;
-using Repository;
+﻿using Books_New.Entities;
 
-namespace Books_New.DataAccess.Repositories.Implementation.Repositories
+namespace Books_New.DataAccess
 {
     public class GenreRepository : RepositoryBase<Genre>, IGenreRepository
     {
         public GenreRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext) { }
-
-        public void CreateGenre(Genre genre)
+            : base(repositoryContext) 
         {
-            Create(genre);
         }
 
         public Genre GetGenre(string name)

@@ -1,6 +1,6 @@
-﻿using Entities.Models;
+﻿using Books_New.Entities;
 
-namespace Books_New.Application.Services.Contracts.Services
+namespace Books_New.Application
 {
     public interface IBookService
     {

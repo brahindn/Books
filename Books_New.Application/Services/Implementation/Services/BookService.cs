@@ -1,10 +1,7 @@
-﻿using Books_New.Application.Services.Contracts.Services;
-using Contracts;
-using Entities.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+﻿using Books_New.DataAccess;
+using Books_New.Entities;
 
-namespace Service
+namespace Books_New.Application
 {
     public class BookService : IBookService
     {
@@ -45,7 +42,7 @@ namespace Service
                 ReleaseDate = DateTime.TryParse(releaseDate, out time) ? time : null
             };
 
-            _repositoryManager.Book.CreateBook(book);
+            _repositoryManager.Book.Create(book);
             _repositoryManager.Save();
         }
 

@@ -1,8 +1,5 @@
-﻿using Books_New.DataAccess.Repositories.Implementation.Repositories;
-using Contracts;
-using Repository;
-
-namespace Books_New.DataAccess.Repositories.Implementation
+﻿
+namespace Books_New.DataAccess
 {
     public class RepositoryManager : IRepositoryManager
     {

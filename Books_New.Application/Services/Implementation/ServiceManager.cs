@@ -1,7 +1,6 @@
-﻿using Books_New.Application.Services.Contracts.Services;
-using Contracts;
-using Service.Contracts;
-namespace Service
+﻿using Books_New.DataAccess;
+
+namespace Books_New.Application
 {
     public class ServiceManager : IServiceManager
     {

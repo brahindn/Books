@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Models
-{
+namespace Books_New.Entities
+{ 
     public class Book
     {
         [Key]
