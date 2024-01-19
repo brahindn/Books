@@ -21,9 +21,30 @@ namespace Books_New.DataAccess
             return answer.IsNullOrEmpty() ? true : false;
         }
 
-        public IQueryable<Book> GetBook(string name)
+        public IQueryable<Book> GetBook(string stringData)
         {
-            Expression<Func<Book, bool>> exception = b => b.Title.Contains(name) || b.Author.Name.Contains(name);
+            Expression<Func<Book, bool>> exception = b =>
+            b.Title.Contains(stringData) || b.Author.Name.Contains(stringData) || 
+            b.Genre.Name.Contains(stringData) || b.Publisher.Name.Contains(stringData);
+
+            var bookList = FindByCondition(exception).Include(b => b.Author);
+
+            return bookList;
+        }
+
+        public IQueryable<Book> GetBook(int pages)
+        {
+            Expression<Func<Book, bool>> exception = b => b.Pages.Value == pages;
+
+            var bookList = FindByCondition(exception).Include(b => b.Author);
+
+            return bookList;
+        }
+
+        public IQueryable<Book> GetBook(DateTime realiseDate)
+        {
+            Expression<Func<Book, bool>> exception = b => b.ReleaseDate.Value == realiseDate;
+
             var bookList = FindByCondition(exception).Include(b => b.Author);
 
             return bookList;

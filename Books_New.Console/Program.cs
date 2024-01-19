@@ -17,23 +17,39 @@ string path = Console.ReadLine();
 
 PopulateDatabaseFromFile(path);
 
-/*var filterConditions = new FilterConditions()
+var filterConditions = new FilterConditions()
 {
-    BookName = config.GetSection("FilterConditions:BookName").Get<List<string>>(),
-    AuthorName = config.GetSection("FilterConditions:AuthorName").Get<List<string>>()
-};*/
+    BookName = startup.FilterConditions.BookName,
+    AuthorName = startup.FilterConditions.AuthorName,
+    GenreName = startup.FilterConditions.GenreName,
+    PublisherName = startup.FilterConditions.PublisherName,
+    PageNumber = startup.FilterConditions.PageNumber,
+    RealiseDate = startup.FilterConditions.RealiseDate
+};
 
-/*var filterBookList = SearchingBook(filterConditions.BookName, serviceProvider);
-Console.WriteLine("Data filtered by Title:");
-ShowBooksWithFilter(filterBookList);
+var filterBookList = SearchingBook(filterConditions.BookName);
+ShowBooksWithFilter(filterBookList, "Data filtered by TITLE:");
 
-var filterAuthorList = SearchingBook(filterConditions.AuthorName, serviceProvider);
-Console.WriteLine("Data filtered by Author:");
-ShowBooksWithFilter(filterAuthorList);*/
+var filterAuthorList = SearchingBook(filterConditions.AuthorName);
+ShowBooksWithFilter(filterAuthorList, "Data filtered by AUTHOR:");
+
+var filterGenreList = SearchingBook(filterConditions.GenreName);
+ShowBooksWithFilter(filterGenreList, "Data filtered by GENRE:");
+
+var filterPublisherList = SearchingBook(filterConditions.PublisherName);
+ShowBooksWithFilter(filterPublisherList, "Data filtered by PUBLISHER:");
+
+var filterPageList = SearchingBook(filterConditions.PageNumber);
+ShowBooksWithFilter(filterPageList, "Data filtered by PAGES:");
+
+var filterRealiseDateList = SearchingBook(filterConditions.RealiseDate);
+ShowBooksWithFilter(filterRealiseDateList, "Data filtered by REALISE DATE:");
 
 
-void ShowBooksWithFilter(List<Book> list)
+void ShowBooksWithFilter(List<Book> list, string message)
 {
+    Console.WriteLine(message);
+
     foreach (var entity in list)
     {
         Console.WriteLine($"{entity.Title} - {entity.Author.Name}");
@@ -44,14 +60,23 @@ void ShowBooksWithFilter(List<Book> list)
     Console.ReadKey();
 }
 
-List<Book> SearchingBook(List<string> filterConditions, ServiceProvider serviceProvider)
+List<Book> SearchingBook(List<string> filterConditions)
 {
     var result = new List<Book>();
-    var serviceManager = serviceProvider.GetRequiredService<IServiceManager>();
     
     foreach (var bookName in filterConditions)
     {
-        result.AddRange(serviceManager.BookService.GetBook(bookName.ToString()));
+        result.AddRange(serviceManager.BookService.GetBook(bookName));
+
+        if(int.TryParse(bookName, out int page))
+        {
+            result.AddRange(serviceManager.BookService.GetBook(page));
+        }
+
+        if(DateTime.TryParse(bookName, out DateTime realiseDate))
+        {
+            result.AddRange(serviceManager.BookService.GetBook(realiseDate));
+        }
     }
 
     return result;

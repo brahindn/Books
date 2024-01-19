@@ -52,5 +52,20 @@ namespace Books_New.Application
 
             return filterBook;
         }
+
+        public IQueryable<Book> GetBook(int pages)
+        {
+            var filterBook = _repositoryManager.Book.GetBook(pages);
+
+            return filterBook;
+        }
+
+        public IQueryable<Book> GetBook(DateTime realiseDate)
+        {
+            var filterBook = _repositoryManager.Book.GetBook(realiseDate);
+
+            return filterBook;
+        }
+
     }
 }
