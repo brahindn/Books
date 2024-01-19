@@ -1,41 +1,35 @@
 ﻿using Books_New.Application;
 using Books_New.Console;
 using Books_New.Entities;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
 
-IConfiguration config = builder.Build();
-
+var startup = new Startup();
 var services = new ServiceCollection();
 
-services.ConfigureRepositoryManager();
-services.ConfigureServiceManager();
-services.ConfigureSqlContext(config);
+startup.ConfigerationServices(services);
 
 var serviceProvider = services.BuildServiceProvider();
+var serviceManager = serviceProvider.GetService<IServiceManager>();
 
 Console.WriteLine("Enter path to file");
 string path = Console.ReadLine();
 
-PopulateDatabaseFromFile(path, serviceProvider);
+PopulateDatabaseFromFile(path);
 
-var filterConditions = new FilterConditions()
+/*var filterConditions = new FilterConditions()
 {
     BookName = config.GetSection("FilterConditions:BookName").Get<List<string>>(),
     AuthorName = config.GetSection("FilterConditions:AuthorName").Get<List<string>>()
-};
+};*/
 
-var filterBookList = SearchingBook(filterConditions.BookName, serviceProvider);
+/*var filterBookList = SearchingBook(filterConditions.BookName, serviceProvider);
 Console.WriteLine("Data filtered by Title:");
 ShowBooksWithFilter(filterBookList);
 
 var filterAuthorList = SearchingBook(filterConditions.AuthorName, serviceProvider);
 Console.WriteLine("Data filtered by Author:");
-ShowBooksWithFilter(filterAuthorList);
+ShowBooksWithFilter(filterAuthorList);*/
 
 
 void ShowBooksWithFilter(List<Book> list)
@@ -63,7 +57,7 @@ List<Book> SearchingBook(List<string> filterConditions, ServiceProvider serviceP
     return result;
 }
 
-void PopulateDatabaseFromFile(string path, ServiceProvider servicesProvider)
+void PopulateDatabaseFromFile(string path)
 {
     while (!File.Exists(path))
     {
@@ -80,7 +74,6 @@ void PopulateDatabaseFromFile(string path, ServiceProvider servicesProvider)
     {
         Console.Write("File detected\n");
         string[] lines = File.ReadAllLines(path);
-        var serviceManager = servicesProvider.GetService<IServiceManager>();
 
         foreach (var line in lines)
         {
