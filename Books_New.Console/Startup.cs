@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Books_New.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Books_New.Console
@@ -23,6 +25,10 @@ namespace Books_New.Console
 
         public void ConfigerationServices(IServiceCollection services)
         {
+            var optionBuilder = new DbContextOptionsBuilder<RepositoryContext>()
+                .UseSqlServer(Config.GetConnectionString("sqlConnection"),
+                b => b.MigrationsAssembly("Books_New.Console"));
+
             services.AddSingleton(Config);
             services.ConfigureRepositoryManager();
             services.ConfigureServiceManager();
