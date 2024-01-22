@@ -2,7 +2,6 @@
 using Books_New.Console;
 using Books_New.Entities;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Graph.Models;
 
 
 var startup = new Startup();
@@ -29,7 +28,6 @@ var filterConditions = new FilterConditions()
 };
 
 var filteredList = SearchingBook(filterConditions);
-ShowBooksWithFilter(filteredList, "Test message"); 
 
 void ShowBooksWithFilter(List<Book> list, string message)
 {
@@ -53,51 +51,75 @@ List<Book> SearchingBook(FilterConditions filterConditions)
     {
         if(filterConditions.BookName != null)
         {
-            foreach(var bookName in filterConditions.BookName)
+            Console.WriteLine("Books filtered by TITLES");
+
+            foreach (var bookName in filterConditions.BookName)
             {
                 result.AddRange(serviceManager.BookService.GetBook(bookName));
+                Console.WriteLine($"{result.Last().Title} - {result.Last().Author.Name}");
             }
+            Console.WriteLine();
         }
         if(filterConditions.AuthorName != null)
         {
-            foreach(var authorName in filterConditions.AuthorName)
+            Console.WriteLine("Books filtered by AUTHORS");
+
+            foreach (var authorName in filterConditions.AuthorName)
             {
                 result.AddRange(serviceManager.BookService.GetBook(authorName));
+                Console.WriteLine($"{result.Last().Title} - {result.Last().Author.Name}");
             }
+            Console.WriteLine();
         }
         if(filterConditions.GenreName != null)
         {
-            foreach(var genreName in filterConditions.GenreName)
+            Console.WriteLine("Books filtered by GENRES");
+
+            foreach (var genreName in filterConditions.GenreName)
             {
                 result.AddRange(serviceManager.BookService.GetBook(genreName));
+                Console.WriteLine($"{result.Last().Title} - {result.Last().Author.Name}");
             }
+            Console.WriteLine();
         }
         if(filterConditions.PublisherName != null)
         {
-            foreach(var  publisherName in filterConditions.PublisherName)
+            Console.WriteLine("Books filtered by PUBLISHERS");
+
+            foreach (var  publisherName in filterConditions.PublisherName)
             {
                 result.AddRange(serviceManager.BookService.GetBook(publisherName));
+                Console.WriteLine($"{result.Last().Title} - {result.Last().Author.Name}");
             }
+            Console.WriteLine();
         }
         if (filterConditions.PageNumber != null)
         {
-            foreach(var pageNumber in filterConditions.PageNumber)
+            Console.WriteLine("Books filtered by PAGES NUMBER");
+
+            foreach (var pageNumber in filterConditions.PageNumber)
             {
                 if(int.TryParse(pageNumber, out int page))
                 {
                     result.AddRange(serviceManager.BookService.GetBook(page));
+                    Console.WriteLine($"{result.Last().Title} - {result.Last().Author.Name}");
                 }
             }
+            Console.WriteLine();
         }
         if (filterConditions.RealiseDate != null)
         {
+            Console.WriteLine("Books filtered by REALISE DATE");
+
             foreach (var realiseDate in filterConditions.RealiseDate)
             {
                 if (DateTime.TryParse(realiseDate, out DateTime date))
                 {
                     result.AddRange(serviceManager.BookService.GetBook(date));
+                    Console.WriteLine($"{result.Last().Title} - {result.Last().Author.Name}");
                 }
             }
+            Console.WriteLine();
         }
     }
 
