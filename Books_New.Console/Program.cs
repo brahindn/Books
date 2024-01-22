@@ -2,6 +2,7 @@
 using Books_New.Console;
 using Books_New.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Graph.Models;
 
 
 var startup = new Startup();
@@ -27,24 +28,8 @@ var filterConditions = new FilterConditions()
     RealiseDate = startup.FilterConditions.RealiseDate
 };
 
-var filterBookList = SearchingBook(filterConditions.BookName);
-ShowBooksWithFilter(filterBookList, "Data filtered by TITLE:");
-
-var filterAuthorList = SearchingBook(filterConditions.AuthorName);
-ShowBooksWithFilter(filterAuthorList, "Data filtered by AUTHOR:");
-
-var filterGenreList = SearchingBook(filterConditions.GenreName);
-ShowBooksWithFilter(filterGenreList, "Data filtered by GENRE:");
-
-var filterPublisherList = SearchingBook(filterConditions.PublisherName);
-ShowBooksWithFilter(filterPublisherList, "Data filtered by PUBLISHER:");
-
-var filterPageList = SearchingBook(filterConditions.PageNumber);
-ShowBooksWithFilter(filterPageList, "Data filtered by PAGES:");
-
-var filterRealiseDateList = SearchingBook(filterConditions.RealiseDate);
-ShowBooksWithFilter(filterRealiseDateList, "Data filtered by REALISE DATE:");
-
+var filteredList = SearchingBook(filterConditions);
+ShowBooksWithFilter(filteredList, "Test message"); 
 
 void ShowBooksWithFilter(List<Book> list, string message)
 {
@@ -60,22 +45,59 @@ void ShowBooksWithFilter(List<Book> list, string message)
     Console.ReadKey();
 }
 
-List<Book> SearchingBook(List<string> filterConditions)
+List<Book> SearchingBook(FilterConditions filterConditions)
 {
     var result = new List<Book>();
-    
-    foreach (var bookName in filterConditions)
+
+    if(filterConditions != null)
     {
-        result.AddRange(serviceManager.BookService.GetBook(bookName));
-
-        if(int.TryParse(bookName, out int page))
+        if(filterConditions.BookName != null)
         {
-            result.AddRange(serviceManager.BookService.GetBook(page));
+            foreach(var bookName in filterConditions.BookName)
+            {
+                result.AddRange(serviceManager.BookService.GetBook(bookName));
+            }
         }
-
-        if(DateTime.TryParse(bookName, out DateTime realiseDate))
+        if(filterConditions.AuthorName != null)
         {
-            result.AddRange(serviceManager.BookService.GetBook(realiseDate));
+            foreach(var authorName in filterConditions.AuthorName)
+            {
+                result.AddRange(serviceManager.BookService.GetBook(authorName));
+            }
+        }
+        if(filterConditions.GenreName != null)
+        {
+            foreach(var genreName in filterConditions.GenreName)
+            {
+                result.AddRange(serviceManager.BookService.GetBook(genreName));
+            }
+        }
+        if(filterConditions.PublisherName != null)
+        {
+            foreach(var  publisherName in filterConditions.PublisherName)
+            {
+                result.AddRange(serviceManager.BookService.GetBook(publisherName));
+            }
+        }
+        if (filterConditions.PageNumber != null)
+        {
+            foreach(var pageNumber in filterConditions.PageNumber)
+            {
+                if(int.TryParse(pageNumber, out int page))
+                {
+                    result.AddRange(serviceManager.BookService.GetBook(page));
+                }
+            }
+        }
+        if (filterConditions.RealiseDate != null)
+        {
+            foreach (var realiseDate in filterConditions.RealiseDate)
+            {
+                if (DateTime.TryParse(realiseDate, out DateTime date))
+                {
+                    result.AddRange(serviceManager.BookService.GetBook(date));
+                }
+            }
         }
     }
 
