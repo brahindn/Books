@@ -2,6 +2,7 @@
 using Books_New.Console;
 using Books_New.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 
 var startup = new Startup();
@@ -114,6 +115,8 @@ void PopulateDatabaseFromFile(string path)
         foreach (var line in lines)
         {
             string[] fields = line.Split(',');
+            string errorFileName = $"{DateTime.Now:yyyyMMdd_HHmm}.txt";
+            string errorFilePath = Path.Combine(Directory.GetCurrentDirectory(), errorFileName);
 
             if (DataCheck(fields))
             {
@@ -126,6 +129,10 @@ void PopulateDatabaseFromFile(string path)
                     Console.WriteLine("(Something went wrong)");
                 }
             }
+            else
+            {
+                File.AppendAllText(errorFilePath, line + Environment.NewLine);
+            }
         }
     }
 
@@ -136,5 +143,11 @@ void PopulateDatabaseFromFile(string path)
 
 bool DataCheck(string[] fields)
 {
-    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParse(fields[3], out DateTime time) && fields[4] is string && fields[5] is string;
+    string[] formats = {
+        "yyyy-MM-dd", "yyyy.MM.dd", "yyyy/MM/dd", 
+        "MM-dd-yyyy", "MM.dd.yyyy", "MM/dd/yyyy", 
+        "dd-MM-yyyy", "dd.MM.yyyy", "dd/MM/yyyy", 
+        "M/d/yyyy", "MM/d/yyyy", "MM/dd/yyyy", "M/dd/yyyy"};
+
+    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParseExact(fields[3], formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time) && fields[4] is string && fields[5] is string;
 }
