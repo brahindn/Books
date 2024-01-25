@@ -143,11 +143,12 @@ void PopulateDatabaseFromFile(string path)
 
 bool DataCheck(string[] fields)
 {
-    string[] formats = {
-        "yyyy-MM-dd", "yyyy.MM.dd", "yyyy/MM/dd", 
-        "MM-dd-yyyy", "MM.dd.yyyy", "MM/dd/yyyy", 
-        "dd-MM-yyyy", "dd.MM.yyyy", "dd/MM/yyyy", 
-        "M/d/yyyy", "MM/d/yyyy", "MM/dd/yyyy", "M/dd/yyyy"};
+    List<string> dateFormats = new List<string>();
 
-    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParseExact(fields[3], formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time) && fields[4] is string && fields[5] is string;
+    foreach(var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+    {
+        dateFormats.Add(culture.DateTimeFormat.ShortDatePattern);
+    }
+
+    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParseExact(fields[3], dateFormats.ToArray(), CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time) && fields[4] is string && fields[5] is string;
 }

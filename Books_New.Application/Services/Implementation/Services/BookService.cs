@@ -1,5 +1,6 @@
 ﻿using Books_New.DataAccess;
 using Books_New.Entities;
+using System.Globalization;
 
 namespace Books_New.Application
 {
@@ -30,7 +31,6 @@ namespace Books_New.Application
             var genre = _repositoryManager.Genre.GetGenre(genreName) ?? new Genre { Name = genreName };
             var publisher = _repositoryManager.Publisher.GetPublisher(publisherName) ?? new Publisher {  Name = publisherName };
             int page;
-            DateTime time;
 
             var book = new Book
             {
@@ -39,7 +39,7 @@ namespace Books_New.Application
                 Genre = genre,
                 Author = author,
                 Publisher = publisher,
-                ReleaseDate = DateTime.TryParse(releaseDate, out time) ? time : null
+                ReleaseDate = DateTime.TryParse(DateConverter(releaseDate), out DateTime date) ? date : null
             };
 
             _repositoryManager.Book.Create(book);
@@ -67,5 +67,19 @@ namespace Books_New.Application
             return filterBook;
         }
 
+        private string DateConverter(string releaseDate)
+        {
+            List<string> dateFormats = new List<string>();
+            
+            foreach(var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+            {
+                dateFormats.Add(culture.DateTimeFormat.ShortDatePattern);
+            }
+
+            var date = DateTime.ParseExact(releaseDate, dateFormats.ToArray(), CultureInfo.InvariantCulture);
+            var ukraineCulture = new CultureInfo("uk-UK");
+
+            return date.ToString(ukraineCulture.DateTimeFormat);
+        }
     }
 }

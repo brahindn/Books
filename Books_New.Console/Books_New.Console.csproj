@@ -37,6 +37,9 @@
     <None Update="books2.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="books3.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="test.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
