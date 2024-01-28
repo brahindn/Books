@@ -4,8 +4,8 @@ namespace Books.Application
 {
     public interface IAuthorService
     {
-        Task CreateAuthorAsync(string authorName);
+        void CreateAuthor(string authorName);
 
-        Task<Author> GetAuthorAsync(string name);
+        Author GetAuthor(string name);
     }
 }

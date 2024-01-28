@@ -13,7 +13,7 @@ namespace Books.Application
             _repositoryManager = repository;
         }
 
-        public async Task CreateBookAsync(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
+        public void CreateBook(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
         {
             var existBook = _repositoryManager.Book.CheckDuplicate(title, genreName, authorName, publisherName);
 
@@ -27,9 +27,9 @@ namespace Books.Application
                 return;
             }
 
-            var author = await _repositoryManager.Author.GetAuthorAsync(authorName) ?? new Author {Name = authorName};
-            var genre = await _repositoryManager.Genre.GetGenreAsync(genreName) ?? new Genre { Name = genreName };
-            var publisher = await _repositoryManager.Publisher.GetPublisherAsync(publisherName) ?? new Publisher {  Name = publisherName };
+            var author = _repositoryManager.Author.GetAuthor(authorName) ?? new Author { Name = authorName };
+            var genre = _repositoryManager.Genre.GetGenre(genreName) ?? new Genre { Name = genreName };
+            var publisher = _repositoryManager.Publisher.GetPublisher(publisherName) ?? new Publisher {  Name = publisherName };
 
             var book = new Book
             {
@@ -42,22 +42,22 @@ namespace Books.Application
             };
 
             _repositoryManager.Book.Create(book);
-            await _repositoryManager.SaveAsync();
+            _repositoryManager.Save();
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(string name)
+        public IQueryable<Book> GetBook(string name)
         {
-            return await _repositoryManager.Book.GetBookAsync(name);
+            return _repositoryManager.Book.GetBook(name);
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(int pages)
+        public IQueryable<Book> GetBook(int pages)
         {
-            return await _repositoryManager.Book.GetBookAsync(pages);
+            return _repositoryManager.Book.GetBook(pages);
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(DateTime realiseDate)
+        public IQueryable<Book> GetBook(DateTime realiseDate)
         {
-            return await _repositoryManager.Book.GetBookAsync(realiseDate);
+            return _repositoryManager.Book.GetBook(realiseDate);
         }
 
         private string DateConverter(string releaseDate)

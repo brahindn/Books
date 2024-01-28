@@ -16,30 +16,30 @@ namespace Books.DataAccess
         {
             Expression<Func<Book, bool>> expression = b => b.Title == title && b.Genre.Name == genreName && b.Author.Name == authorName && b.Publisher.Name == publisherName;
 
-            return FindByConditionAsync(expression).IsNullOrEmpty();
+            return FindByCondition(expression).IsNullOrEmpty();
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(string stringData)
+        public IQueryable<Book> GetBook(string stringData)
         {
             Expression<Func<Book, bool>> expression = b =>
             b.Title.Contains(stringData) || b.Author.Name.Contains(stringData) || 
             b.Genre.Name.Contains(stringData) || b.Publisher.Name.Contains(stringData);
 
-            return FindByConditionAsync(expression).Include(b => b.Author);
+            return FindByCondition(expression).Include(b => b.Author);
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(int pages)
+        public IQueryable<Book> GetBook(int pages)
         {
             Expression<Func<Book, bool>> expression = b => b.Pages.Value == pages;
 
-            return FindByConditionAsync(expression).Include(b => b.Author);
+            return FindByCondition(expression).Include(b => b.Author);
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(DateTime releaseDate)
+        public IQueryable<Book> GetBook(DateTime releaseDate)
         {
             Expression<Func<Book, bool>> expression = b => b.ReleaseDate.Value == releaseDate;
 
-            return FindByConditionAsync(expression).Include(b => b.Author);
+            return FindByCondition(expression).Include(b => b.Author);
         }
     }
 }

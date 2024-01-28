@@ -11,7 +11,7 @@ namespace Books.DataAccess
             RepositoryContext = repositoryContext;
         }
 
-        public IQueryable<T> FindByConditionAsync(Expression<Func<T, bool>> expression)
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
             return RepositoryContext.Set<T>().Where(expression);
         }

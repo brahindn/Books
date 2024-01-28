@@ -12,7 +12,7 @@ namespace Books.Application
             _repositoryManager = repository;
         }
 
-        public async Task CreateGenreAsync(string genreName)
+        public void CreateGenre(string genreName)
         {
             if (string.IsNullOrEmpty(genreName))
             {
@@ -21,12 +21,12 @@ namespace Books.Application
 
             var genre = new Genre { Name = genreName };
             _repositoryManager.Genre.Create(genre);
-            await _repositoryManager.SaveAsync();
+            _repositoryManager.Save();
         }
 
-        public async Task<Genre> GetGenreAsync(string name)
+        public Genre GetGenre(string name)
         {
-            return await _repositoryManager.Genre.GetGenreAsync(name);
+            return _repositoryManager.Genre.GetGenre(name);
         }
     }
 }

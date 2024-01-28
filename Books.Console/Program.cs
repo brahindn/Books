@@ -45,28 +45,28 @@ List<Book> SearchingBook(FilterConditions filterConditions)
         {
             foreach (var bookName in filterConditions.BookName)
             {
-                result.AddRange((IEnumerable<Book>)serviceManager.BookService.GetBookAsync(bookName));
+                result.AddRange(serviceManager.BookService.GetBook(bookName));
             }
         }
         if(filterConditions.AuthorName != null)
         {
             foreach (var authorName in filterConditions.AuthorName)
             {
-                result.AddRange((IEnumerable<Book>)serviceManager.BookService.GetBookAsync(authorName));
+                result.AddRange(serviceManager.BookService.GetBook(authorName));
             }
         }
         if(filterConditions.GenreName != null)
         {
             foreach (var genreName in filterConditions.GenreName)
             {
-                result.AddRange((IEnumerable<Book>)serviceManager.BookService.GetBookAsync(genreName));
+                result.AddRange(serviceManager.BookService.GetBook(genreName));
             }
         }
         if(filterConditions.PublisherName != null)
         {
             foreach (var  publisherName in filterConditions.PublisherName)
             {
-                result.AddRange((IEnumerable<Book>)serviceManager.BookService.GetBookAsync(publisherName));
+                result.AddRange(serviceManager.BookService.GetBook(publisherName));
             }
         }
         if (filterConditions.PageNumber != null)
@@ -75,7 +75,7 @@ List<Book> SearchingBook(FilterConditions filterConditions)
             {
                 if(int.TryParse(pageNumber, out int page))
                 {
-                    result.AddRange((IEnumerable<Book>)serviceManager.BookService.GetBookAsync(pageNumber));
+                    result.AddRange(serviceManager.BookService.GetBook(pageNumber));
                 }
             }
         }
@@ -85,7 +85,7 @@ List<Book> SearchingBook(FilterConditions filterConditions)
             {
                 if (DateTime.TryParse(releaseDate, out DateTime date))
                 {
-                    result.AddRange((IEnumerable<Book>)serviceManager.BookService.GetBookAsync(releaseDate));
+                    result.AddRange(serviceManager.BookService.GetBook(releaseDate));
                 }
             }
         }
@@ -122,7 +122,7 @@ void PopulateDatabaseFromFile(string path)
             {
                 try
                 {
-                    serviceManager.BookService.CreateBookAsync(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
+                    serviceManager.BookService.CreateBook(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
                 }
                 catch
                 {

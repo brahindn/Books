@@ -12,7 +12,7 @@ namespace Books.Application
             _repositoryManager = repository;
         }
 
-        public async Task CreatePublisherAsync(string publisherName)
+        public void CreatePublisher(string publisherName)
         {
             if (string.IsNullOrEmpty(publisherName))
             {
@@ -21,12 +21,12 @@ namespace Books.Application
 
             var publisher = new Publisher { Name = publisherName };
             _repositoryManager.Publisher.Create(publisher);
-            await _repositoryManager.SaveAsync();
+            _repositoryManager.Save();
         }
 
-        public async Task<Publisher> GetPublisherAsync(string name)
+        public Publisher GetPublisher(string name)
         {
-            return await _repositoryManager.Publisher.GetPublisherAsync(name);
+            return _repositoryManager.Publisher.GetPublisher(name);
         }
     }
 }

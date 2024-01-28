@@ -10,9 +10,9 @@ namespace Books.DataAccess
         {
         }
 
-        public async Task<Author> GetAuthorAsync(string name)
+        public Author GetAuthor(string name)
         {
-            return await FindByConditionAsync(a => a.Name == name).SingleOrDefaultAsync();
+            return FindByCondition(a => a.Name == name).SingleOrDefault();
         }
     }
 }

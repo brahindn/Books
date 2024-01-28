@@ -4,9 +4,9 @@ namespace Books.Application
 {
     public interface IBookService
     {
-        Task CreateBookAsync(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName);
-        Task<IQueryable<Book>> GetBookAsync(string name);
-        Task<IQueryable<Book>> GetBookAsync(int pages);
-        Task<IQueryable<Book>> GetBookAsync(DateTime releaseDate);
+        void CreateBook(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName);
+        IQueryable<Book> GetBook(string name);
+        IQueryable<Book> GetBook(int pages);
+        IQueryable<Book> GetBook(DateTime releaseDate);
     }
 }

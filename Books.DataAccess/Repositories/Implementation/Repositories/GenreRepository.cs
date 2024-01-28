@@ -10,9 +10,9 @@ namespace Books.DataAccess
         {
         }
 
-        public async Task<Genre> GetGenreAsync(string name)
+        public Genre GetGenre(string name)
         {
-            return await FindByConditionAsync(g => g.Name == name).SingleOrDefaultAsync();
+            return FindByCondition(g => g.Name == name).SingleOrDefault();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Books.DataAccess
         {
         }
 
-        public async Task<Publisher> GetPublisherAsync(string name)
+        public Publisher GetPublisher(string name)
         {
-            return await FindByConditionAsync(p => p.Name == name).SingleOrDefaultAsync();
+            return FindByCondition(p => p.Name == name).SingleOrDefault();
         }
     }
 }
