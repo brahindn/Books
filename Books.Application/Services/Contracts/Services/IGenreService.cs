@@ -4,7 +4,7 @@ namespace Books.Application
 {
     public interface IGenreService
     {
-        void CreateGenre(string genreName);
-        Genre GetGenre(string name);
+        Task CreateGenreAsync(string genreName);
+        Task<Genre> GetGenreAsync(string name);
     }
 }

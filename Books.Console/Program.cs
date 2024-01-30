@@ -2,7 +2,6 @@
 using Books.Console;
 using Books.Domain;
 using Microsoft.Extensions.DependencyInjection;
-using System.Globalization;
 
 
 var startup = new Startup();
@@ -16,7 +15,7 @@ var serviceManager = serviceProvider.GetService<IServiceManager>();
 Console.WriteLine("Enter path to file");
 string path = Console.ReadLine();
 
-PopulateDatabaseFromFile(path);
+await PopulateDatabaseFromFile(path);
 
 var filterConditions = new FilterConditions()
 {
@@ -28,73 +27,27 @@ var filterConditions = new FilterConditions()
     ReleaseDate = startup.FilterConditions.ReleaseDate
 };
 
-var filteredList = SearchingBook(filterConditions);
+var filteredList = await SearchingBook(filterConditions);
 
 foreach(var book in filteredList)
 {
     Console.WriteLine($"{book.Title} - {book.Author.Name}");
 }
 
-List<Book> SearchingBook(FilterConditions filterConditions)
+async Task<List<Book>> SearchingBook(FilterConditions filterConditions)
 {
     var result = new List<Book>();
 
     if (filterConditions != null)
     {
-        if(filterConditions.BookName != null)
-        {
-            foreach (var bookName in filterConditions.BookName)
-            {
-                result.AddRange(serviceManager.BookService.GetBook(bookName));
-            }
-        }
-        if(filterConditions.AuthorName != null)
-        {
-            foreach (var authorName in filterConditions.AuthorName)
-            {
-                result.AddRange(serviceManager.BookService.GetBook(authorName));
-            }
-        }
-        if(filterConditions.GenreName != null)
-        {
-            foreach (var genreName in filterConditions.GenreName)
-            {
-                result.AddRange(serviceManager.BookService.GetBook(genreName));
-            }
-        }
-        if(filterConditions.PublisherName != null)
-        {
-            foreach (var  publisherName in filterConditions.PublisherName)
-            {
-                result.AddRange(serviceManager.BookService.GetBook(publisherName));
-            }
-        }
-        if (filterConditions.PageNumber != null)
-        {
-            foreach (var pageNumber in filterConditions.PageNumber)
-            {
-                if(int.TryParse(pageNumber, out int page))
-                {
-                    result.AddRange(serviceManager.BookService.GetBook(pageNumber));
-                }
-            }
-        }
-        if (filterConditions.ReleaseDate != null)
-        {
-            foreach (var releaseDate in filterConditions.ReleaseDate)
-            {
-                if (DateTime.TryParse(releaseDate, out DateTime date))
-                {
-                    result.AddRange(serviceManager.BookService.GetBook(releaseDate));
-                }
-            }
-        }
+        var books = await serviceManager.BookService.GetBooksAsync(filterConditions);
+        result.AddRange(books);
     }
 
     return result.GroupBy(b => new { b.Title, b.Author.Name }).Select(b => b.First()).ToList();
 }
 
-void PopulateDatabaseFromFile(string path)
+async Task PopulateDatabaseFromFile(string path)
 {
     while (!File.Exists(path))
     {
@@ -122,7 +75,7 @@ void PopulateDatabaseFromFile(string path)
             {
                 try
                 {
-                    serviceManager.BookService.CreateBook(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
+                    await serviceManager.BookService.CreateBookAsync(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
                 }
                 catch
                 {
@@ -143,12 +96,5 @@ void PopulateDatabaseFromFile(string path)
 
 bool DataCheck(string[] fields)
 {
-    List<string> dateFormats = new List<string>();
-
-    foreach(var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
-    {
-        dateFormats.Add(culture.DateTimeFormat.ShortDatePattern);
-    }
-
-    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && DateTime.TryParseExact(fields[3], dateFormats.ToArray(), CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime time) && fields[4] is string && fields[5] is string;
+    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && fields[4] is string && fields[5] is string;
 }

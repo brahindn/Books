@@ -5,6 +5,6 @@ namespace Books.DataAccess
     public interface IGenreRepository
     {
         void Create(Genre genre);
-        Genre GetGenre(string name);
+        Task<Genre> GetGenreAsync(string name);
     }
 }

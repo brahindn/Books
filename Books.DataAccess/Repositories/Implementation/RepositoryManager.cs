@@ -24,6 +24,6 @@ namespace Books.DataAccess
         public IGenreRepository Genre => _genreRepository.Value;
         public IPublisherRepository Publisher => _publisherRepository.Value;
 
-        public void Save() => _repositoryContext.SaveChanges();
+        public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }
 }

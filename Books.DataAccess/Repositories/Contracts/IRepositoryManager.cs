@@ -6,6 +6,6 @@
         IBookRepository Book { get; }
         IGenreRepository Genre { get; }
         IPublisherRepository Publisher { get; }
-        void Save();
+        Task SaveAsync();
     }
 }

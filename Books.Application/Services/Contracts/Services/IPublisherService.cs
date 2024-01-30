@@ -4,7 +4,7 @@ namespace Books.Application
 {
     public interface IPublisherService
     {
-        void CreatePublisher(string publisherName);
-        Publisher GetPublisher(string name);
+        Task CreatePublisherAsync(string publisherName);
+        Task<Publisher> GetPublisherAsync(string name);
     }
 }

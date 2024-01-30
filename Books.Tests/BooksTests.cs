@@ -27,7 +27,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewAuthorToDataBase()
         {
-            _serviceManager.AuthorService.CreateAuthor("Spange Bob");
+            _serviceManager.AuthorService.CreateAuthorAsync("Spange Bob");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -39,7 +39,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNullAuthorToDataBase()
         {
-            _serviceManager.AuthorService.CreateAuthor(null);
+            _serviceManager.AuthorService.CreateAuthorAsync(null);
 
             using (var context = new RepositoryContext(_options))
             {
@@ -50,7 +50,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddEmptyAuthorToDataBase()
         {
-            _serviceManager.AuthorService.CreateAuthor(string.Empty);
+            _serviceManager.AuthorService.CreateAuthorAsync(string.Empty);
 
             using (var context = new RepositoryContext(_options))
             {
@@ -61,7 +61,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewGenreToDataBase()
         {
-            _serviceManager.GenreService.CreateGenre("Horror");
+            _serviceManager.GenreService.CreateGenreAsync("Horror");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -73,7 +73,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNullGenreToDataBase()
         {
-            _serviceManager.AuthorService.CreateAuthor(null);
+            _serviceManager.AuthorService.CreateAuthorAsync(null);
 
             using (var context = new RepositoryContext(_options))
             {
@@ -84,7 +84,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddEmptyGenreToDataBase()
         {
-            _serviceManager.AuthorService.CreateAuthor(string.Empty);
+            _serviceManager.AuthorService.CreateAuthorAsync(string.Empty);
 
             using (var context = new RepositoryContext(_options))
             {
@@ -95,7 +95,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewPublisherToDataBase()
         {
-            _serviceManager.PublisherService.CreatePublisher("City Classic");
+            _serviceManager.PublisherService.CreatePublisherAsync("City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -107,7 +107,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNullPublisherToDataBase()
         {
-            _serviceManager.PublisherService.CreatePublisher(null);
+            _serviceManager.PublisherService.CreatePublisherAsync(null);
 
             using (var context = new RepositoryContext(_options))
             {
@@ -118,7 +118,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddEmptyPublisherToDataBase()
         {
-            _serviceManager.PublisherService.CreatePublisher(string.Empty);
+            _serviceManager.PublisherService.CreatePublisherAsync(string.Empty);
 
             using (var context = new RepositoryContext(_options))
             {
@@ -129,7 +129,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase()
         {
-            _serviceManager.BookService.CreateBook("Title", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
+            _serviceManager.BookService.CreateBookAsync("Title", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -148,7 +148,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase_WithoutTitle_0Books()
         {
-            _serviceManager.BookService.CreateBook("", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
+            _serviceManager.BookService.CreateBookAsync("", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -159,7 +159,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase_WithoutPages()
         {
-            _serviceManager.BookService.CreateBook("Title", "", "Horror", "2017-12-10", "Spange Bob", "City Classic");
+            _serviceManager.BookService.CreateBookAsync("Title", "", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -170,7 +170,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase_WithoutGenre_0Books()
         {
-            _serviceManager.BookService.CreateBook("Title", "500", "", "2017-12-10", "Spange Bob", "City Classic");
+            _serviceManager.BookService.CreateBookAsync("Title", "500", "", "2017-12-10", "Spange Bob", "City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -181,7 +181,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase_WithoutRealiseDate()
         {
-            _serviceManager.BookService.CreateBook("Title", "500", "Horror", "", "Spange Bob", "City Classic");
+            _serviceManager.BookService.CreateBookAsync("Title", "500", "Horror", "", "Spange Bob", "City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -192,7 +192,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase_WithoutAuthor_0Books()
         {
-            _serviceManager.BookService.CreateBook("Title", "500", "Horror", "2017-12-10", "", "City Classic");
+            _serviceManager.BookService.CreateBookAsync("Title", "500", "Horror", "2017-12-10", "", "City Classic");
 
             using (var context = new RepositoryContext(_options))
             {
@@ -203,7 +203,7 @@ namespace Books.Tests
         [TestMethod]
         public void AddNewBookToDataBase_WithoutPublisher_0Books()
         {
-            _serviceManager.BookService.CreateBook("", "500", "Horror", "2017-12-10", "Spange Bob", "");
+            _serviceManager.BookService.CreateBookAsync("", "500", "Horror", "2017-12-10", "Spange Bob", "");
 
             using (var context = new RepositoryContext(_options))
             {

@@ -6,8 +6,8 @@ namespace Books.DataAccess
     {
         void Create(Book book);
         bool CheckDuplicate(string title, string genreName, string authorName, string publisherName);
-        IQueryable<Book> GetBook(string date);
-        IQueryable<Book> GetBook(int pages);
-        IQueryable<Book> GetBook(DateTime releaseDate);
+        Task<IQueryable<Book>> GetBookAsync(string date);
+        Task<IQueryable<Book>> GetBookAsync(int pages);
+        Task<IQueryable<Book>> GetBookAsync(DateTime releaseDate);
     }
 }

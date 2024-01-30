@@ -13,7 +13,7 @@ namespace Books.Application
             _repositoryManager = repository;
         }
 
-        public void CreateBook(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
+        public async Task CreateBookAsync(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
         {
             var existBook = _repositoryManager.Book.CheckDuplicate(title, genreName, authorName, publisherName);
 
@@ -27,9 +27,9 @@ namespace Books.Application
                 return;
             }
 
-            var author = _repositoryManager.Author.GetAuthor(authorName) ?? new Author { Name = authorName };
-            var genre = _repositoryManager.Genre.GetGenre(genreName) ?? new Genre { Name = genreName };
-            var publisher = _repositoryManager.Publisher.GetPublisher(publisherName) ?? new Publisher {  Name = publisherName };
+            var author = await _repositoryManager.Author.GetAuthorAsync(authorName) ?? new Author { Name = authorName };
+            var genre = await _repositoryManager.Genre.GetGenreAsync(genreName) ?? new Genre { Name = genreName };
+            var publisher = await _repositoryManager.Publisher.GetPublisherAsync(publisherName) ?? new Publisher {  Name = publisherName };
 
             var book = new Book
             {
@@ -42,25 +42,69 @@ namespace Books.Application
             };
 
             _repositoryManager.Book.Create(book);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
         }
 
-        public IQueryable<Book> GetBook(string name)
+        public async Task<List<Book>> GetBooksAsync(FilterConditions filterConditions)
         {
-            return _repositoryManager.Book.GetBook(name);
+            var result = new List<Book>();
+
+            if(filterConditions != null)
+            {
+                if(filterConditions.BookName != null)
+                {
+                    foreach (var bookName in filterConditions.BookName)
+                    {
+                        var books = await _repositoryManager.Book.GetBookAsync(bookName);
+                        result.AddRange(books);
+                    }
+                }
+                if (filterConditions.AuthorName != null)
+                {
+                    foreach (var authorName in filterConditions.AuthorName)
+                    {
+                        var books = await _repositoryManager.Book.GetBookAsync(authorName);
+                        result.AddRange(books);
+                    }
+                }
+                if (filterConditions.GenreName != null)
+                {
+                    foreach (var genreName in filterConditions.GenreName)
+                    {
+                        var books = await _repositoryManager.Book.GetBookAsync(genreName);
+                        result.AddRange(books);
+                    }
+                }
+                if (filterConditions.PublisherName != null)
+                {
+                    foreach (var publisherName in filterConditions.GenreName)
+                    {
+                        var books = await _repositoryManager.Book.GetBookAsync(publisherName);
+                        result.AddRange(books);
+                    }
+                }
+                if(filterConditions.PageNumber != null)
+                {
+                    foreach(var pageNumber in filterConditions.PageNumber)
+                    {
+                        var books = await _repositoryManager.Book.GetBookAsync(pageNumber);
+                        result.AddRange(books);
+                    }
+                }
+                if (filterConditions.ReleaseDate != null)
+                {
+                    foreach (var releaseDate in filterConditions.ReleaseDate)
+                    {
+                        var books = await _repositoryManager.Book.GetBookAsync(releaseDate);
+                        result.AddRange(books);
+                    }
+                }
+            }
+
+            return result;
         }
 
-        public IQueryable<Book> GetBook(int pages)
-        {
-            return _repositoryManager.Book.GetBook(pages);
-        }
-
-        public IQueryable<Book> GetBook(DateTime realiseDate)
-        {
-            return _repositoryManager.Book.GetBook(realiseDate);
-        }
-
-        private string DateConverter(string releaseDate)
+        private static string DateConverter(string releaseDate)
         {
             List<string> dateFormats = new List<string>();
             
@@ -69,10 +113,18 @@ namespace Books.Application
                 dateFormats.Add(culture.DateTimeFormat.ShortDatePattern);
             }
 
-            var date = DateTime.ParseExact(releaseDate, dateFormats.ToArray(), CultureInfo.InvariantCulture);
-            var ukraineCulture = new CultureInfo("uk-UK");
+            try
+            {
+                var date = DateTime.ParseExact(releaseDate, dateFormats.ToArray(), CultureInfo.InvariantCulture);
+                var ukraineCulture = new CultureInfo("uk-UK");
 
-            return date.ToString(ukraineCulture.DateTimeFormat);
+                return date.ToString(ukraineCulture.DateTimeFormat);
+            }
+            catch
+            {
+                var date = "";
+                return date;
+            }
         }
     }
 }
