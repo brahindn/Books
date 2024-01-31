@@ -32,7 +32,7 @@ var filteredList = await SearchingBook(filterConditions);
 
 foreach(var book in filteredList)
 {
-    Console.WriteLine($"{book.Title} - {book.Author.Name}");
+    Console.WriteLine($"{book.Title}");
 }
 
 async Task<List<Book>> SearchingBook(FilterConditions filterConditions)
@@ -45,7 +45,7 @@ async Task<List<Book>> SearchingBook(FilterConditions filterConditions)
         result.AddRange(books);
     }
 
-    return result.GroupBy(b => new { b.Title, b.Author.Name }).Select(b => b.First()).ToList();
+    return result.GroupBy(b => b.Title).Select(b => b.First()).ToList();
 }
 
 async Task PopulateDatabaseFromFile(string path)

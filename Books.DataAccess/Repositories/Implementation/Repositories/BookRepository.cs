@@ -20,27 +20,11 @@ namespace Books.DataAccess.Repositories.Implementation.Repositories
             return FindByCondition(expression).IsNullOrEmpty();
         }
 
-        public async Task<IQueryable<Book>> GetBookAsync(string stringData)
+        public async Task<IQueryable<Book>> GetAllBooksAsync()
         {
-            Expression<Func<Book, bool>> expression = b =>
-            b.Title.Contains(stringData) || b.Author.Name.Contains(stringData) ||
-            b.Genre.Name.Contains(stringData) || b.Publisher.Name.Contains(stringData);
+            Expression<Func<Book, bool>> expression = b => b.Title != null;
 
-            return FindByCondition(expression).Include(b => b.Author);
-        }
-
-        public async Task<IQueryable<Book>> GetBookAsync(int pages)
-        {
-            Expression<Func<Book, bool>> expression = b => b.Pages.Value == pages;
-
-            return FindByCondition(expression).Include(b => b.Author);
-        }
-
-        public async Task<IQueryable<Book>> GetBookAsync(DateTime releaseDate)
-        {
-            Expression<Func<Book, bool>> expression = b => b.ReleaseDate.Value == releaseDate;
-
-            return FindByCondition(expression).Include(b => b.Author);
+            return FindByCondition(expression);
         }
     }
 }

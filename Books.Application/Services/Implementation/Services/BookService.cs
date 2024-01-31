@@ -2,6 +2,7 @@
 using Books.DataAccess.Repositories.Contracts;
 using Books.Domain;
 using Books.Domain.Entities;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 
 namespace Books.Application.Services.Implementation.Services
@@ -51,13 +52,18 @@ namespace Books.Application.Services.Implementation.Services
         {
             var result = new List<Book>();
 
+            var allBooks = await _repositoryManager.Book.GetAllBooksAsync();
+
+
+
+
             if (filterConditions != null)
             {
                 if (filterConditions.BookName != null)
                 {
                     foreach (var bookName in filterConditions.BookName)
                     {
-                        var books = await _repositoryManager.Book.GetBookAsync(bookName);
+                        var books = allBooks.Where(b => b.Title == bookName).ToList();
                         result.AddRange(books);
                     }
                 }
@@ -65,7 +71,7 @@ namespace Books.Application.Services.Implementation.Services
                 {
                     foreach (var authorName in filterConditions.AuthorName)
                     {
-                        var books = await _repositoryManager.Book.GetBookAsync(authorName);
+                        var books = allBooks.Where(b => b.Author.Name == authorName).ToList();
                         result.AddRange(books);
                     }
                 }
@@ -73,7 +79,7 @@ namespace Books.Application.Services.Implementation.Services
                 {
                     foreach (var genreName in filterConditions.GenreName)
                     {
-                        var books = await _repositoryManager.Book.GetBookAsync(genreName);
+                        var books = allBooks.Where(b => b.Genre.Name == genreName).ToList();
                         result.AddRange(books);
                     }
                 }
@@ -81,7 +87,7 @@ namespace Books.Application.Services.Implementation.Services
                 {
                     foreach (var publisherName in filterConditions.GenreName)
                     {
-                        var books = await _repositoryManager.Book.GetBookAsync(publisherName);
+                        var books = allBooks.Where(b => b.Title == publisherName).ToList();
                         result.AddRange(books);
                     }
                 }
@@ -89,7 +95,8 @@ namespace Books.Application.Services.Implementation.Services
                 {
                     foreach (var pageNumber in filterConditions.PageNumber)
                     {
-                        var books = await _repositoryManager.Book.GetBookAsync(pageNumber);
+                        int.TryParse(pageNumber, out int page);
+                        var books = allBooks.Where(b => b.Pages.Value == page).ToList();
                         result.AddRange(books);
                     }
                 }
@@ -97,7 +104,8 @@ namespace Books.Application.Services.Implementation.Services
                 {
                     foreach (var releaseDate in filterConditions.ReleaseDate)
                     {
-                        var books = await _repositoryManager.Book.GetBookAsync(releaseDate);
+                        DateTime.TryParse(releaseDate, out DateTime date);
+                        var books = allBooks.Where(b => b.ReleaseDate.Value == date).ToList();
                         result.AddRange(books);
                     }
                 }
@@ -105,6 +113,10 @@ namespace Books.Application.Services.Implementation.Services
 
             return result;
         }
+
+
+
+
 
         private static string DateConverter(string releaseDate)
         {
