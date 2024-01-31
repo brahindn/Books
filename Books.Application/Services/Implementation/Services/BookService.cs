@@ -1,8 +1,10 @@
-﻿using Books.DataAccess;
+﻿using Books.Application.Services.Contracts.Services;
+using Books.DataAccess.Repositories.Contracts;
 using Books.Domain;
+using Books.Domain.Entities;
 using System.Globalization;
 
-namespace Books.Application
+namespace Books.Application.Services.Implementation.Services
 {
     public class BookService : IBookService
     {
@@ -15,6 +17,11 @@ namespace Books.Application
 
         public async Task CreateBookAsync(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
         {
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
+            {
+                throw new ArgumentException("Title, AuthorName, GenreName or PublisherName cannot be null or empty.");
+            }   
+
             var existBook = _repositoryManager.Book.CheckDuplicate(title, genreName, authorName, publisherName);
 
             if (!existBook)
@@ -22,14 +29,9 @@ namespace Books.Application
                 return;
             }
 
-            if(string.IsNullOrEmpty(title) || string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
-            {
-                return;
-            }
-
             var author = await _repositoryManager.Author.GetAuthorAsync(authorName) ?? new Author { Name = authorName };
             var genre = await _repositoryManager.Genre.GetGenreAsync(genreName) ?? new Genre { Name = genreName };
-            var publisher = await _repositoryManager.Publisher.GetPublisherAsync(publisherName) ?? new Publisher {  Name = publisherName };
+            var publisher = await _repositoryManager.Publisher.GetPublisherAsync(publisherName) ?? new Publisher { Name = publisherName };
 
             var book = new Book
             {
@@ -49,9 +51,9 @@ namespace Books.Application
         {
             var result = new List<Book>();
 
-            if(filterConditions != null)
+            if (filterConditions != null)
             {
-                if(filterConditions.BookName != null)
+                if (filterConditions.BookName != null)
                 {
                     foreach (var bookName in filterConditions.BookName)
                     {
@@ -83,9 +85,9 @@ namespace Books.Application
                         result.AddRange(books);
                     }
                 }
-                if(filterConditions.PageNumber != null)
+                if (filterConditions.PageNumber != null)
                 {
-                    foreach(var pageNumber in filterConditions.PageNumber)
+                    foreach (var pageNumber in filterConditions.PageNumber)
                     {
                         var books = await _repositoryManager.Book.GetBookAsync(pageNumber);
                         result.AddRange(books);
@@ -107,8 +109,8 @@ namespace Books.Application
         private static string DateConverter(string releaseDate)
         {
             List<string> dateFormats = new List<string>();
-            
-            foreach(var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+
+            foreach (var culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
             {
                 dateFormats.Add(culture.DateTimeFormat.ShortDatePattern);
             }

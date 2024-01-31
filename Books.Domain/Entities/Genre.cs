@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Books.Domain
+namespace Books.Domain.Entities
 {
     public class Genre
     {

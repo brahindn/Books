@@ -1,4 +1,5 @@
-﻿using Books.Domain;
+﻿using Books.DataAccess.EntityConfiguration;
+using Books.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Books.DataAccess

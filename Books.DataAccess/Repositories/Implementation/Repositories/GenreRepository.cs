@@ -1,12 +1,13 @@
-﻿using Books.Domain;
+﻿using Books.DataAccess.Repositories.Contracts.Repositories;
+using Books.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Books.DataAccess
+namespace Books.DataAccess.Repositories.Implementation.Repositories
 {
     public class GenreRepository : RepositoryBase<Genre>, IGenreRepository
     {
         public GenreRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext) 
+            : base(repositoryContext)
         {
         }
 

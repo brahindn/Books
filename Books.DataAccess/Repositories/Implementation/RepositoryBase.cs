@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using Books.DataAccess.Repositories.Contracts;
+using System.Linq.Expressions;
 
-namespace Books.DataAccess
+namespace Books.DataAccess.Repositories.Implementation
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
@@ -15,7 +16,7 @@ namespace Books.DataAccess
         {
             return RepositoryContext.Set<T>().Where(expression);
         }
-          
+
         public void Create(T entity)
         {
             RepositoryContext.Set<T>().Add(entity);

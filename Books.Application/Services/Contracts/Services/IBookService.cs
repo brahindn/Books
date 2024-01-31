@@ -1,6 +1,6 @@
-﻿using Books.Domain;
+﻿using Books.Domain.Entities;
 
-namespace Books.Application
+namespace Books.Application.Services.Contracts.Services
 {
     public interface IBookService
     {

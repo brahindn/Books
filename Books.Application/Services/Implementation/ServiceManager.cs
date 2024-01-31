@@ -1,6 +1,9 @@
-﻿using Books.DataAccess;
+﻿using Books.Application.Services.Contracts;
+using Books.Application.Services.Contracts.Services;
+using Books.Application.Services.Implementation.Services;
+using Books.DataAccess.Repositories.Contracts;
 
-namespace Books.Application
+namespace Books.Application.Services.Implementation
 {
     public class ServiceManager : IServiceManager
     {

@@ -1,7 +1,8 @@
-﻿using Books.DataAccess;
-using Books.Domain;
+﻿using Books.Application.Services.Contracts.Services;
+using Books.DataAccess.Repositories.Contracts;
+using Books.Domain.Entities;
 
-namespace Books.Application
+namespace Books.Application.Services.Implementation.Services
 {
     public class AuthorService : IAuthorService
     {
@@ -14,7 +15,7 @@ namespace Books.Application
 
         public async Task CreateAuthorAsync(string authorName)
         {
-            if(string.IsNullOrEmpty(authorName))
+            if (string.IsNullOrEmpty(authorName))
             {
                 return;
             }

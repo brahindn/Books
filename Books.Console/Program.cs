@@ -1,6 +1,7 @@
 ﻿using Books.Application;
+using Books.Application.Services.Contracts;
 using Books.Console;
-using Books.Domain;
+using Books.Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -77,9 +78,10 @@ async Task PopulateDatabaseFromFile(string path)
                 {
                     await serviceManager.BookService.CreateBookAsync(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    Console.WriteLine("(Something went wrong)");
+                    Console.WriteLine($"Something went wrong: {ex.Message}");
+                    File.AppendAllText(errorFilePath, line + Environment.NewLine);
                 }
             }
             else
@@ -96,5 +98,10 @@ async Task PopulateDatabaseFromFile(string path)
 
 bool DataCheck(string[] fields)
 {
-    return fields[0] is string && int.TryParse(fields[1], out int page) && fields[2] is string && fields[4] is string && fields[5] is string;
+    if (fields[1].Equals("Pages", StringComparison.OrdinalIgnoreCase))
+    {
+    return false;
+    }
+
+    return fields[0] is string && fields[2] is string && fields[4] is string && fields[5] is string;
 }

@@ -1,4 +1,6 @@
-﻿namespace Books.DataAccess
+﻿using Books.DataAccess.Repositories.Contracts.Repositories;
+
+namespace Books.DataAccess.Repositories.Contracts
 {
     public interface IRepositoryManager
     {

@@ -1,6 +1,6 @@
-﻿using Books.Domain;
+﻿using Books.Domain.Entities;
 
-namespace Books.DataAccess
+namespace Books.DataAccess.Repositories.Contracts.Repositories
 {
     public interface IPublisherRepository
     {

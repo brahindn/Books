@@ -1,14 +1,15 @@
-﻿using Books.Domain;
+﻿using Books.DataAccess.Repositories.Contracts.Repositories;
+using Books.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
 
-namespace Books.DataAccess
+namespace Books.DataAccess.Repositories.Implementation.Repositories
 {
     public class BookRepository : RepositoryBase<Book>, IBookRepository
     {
         public BookRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext) 
+            : base(repositoryContext)
         {
         }
 
@@ -22,7 +23,7 @@ namespace Books.DataAccess
         public async Task<IQueryable<Book>> GetBookAsync(string stringData)
         {
             Expression<Func<Book, bool>> expression = b =>
-            b.Title.Contains(stringData) || b.Author.Name.Contains(stringData) || 
+            b.Title.Contains(stringData) || b.Author.Name.Contains(stringData) ||
             b.Genre.Name.Contains(stringData) || b.Publisher.Name.Contains(stringData);
 
             return FindByCondition(expression).Include(b => b.Author);
