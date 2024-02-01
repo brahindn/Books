@@ -6,7 +6,7 @@ namespace Books.DataAccess.Repositories.Contracts.Repositories
     {
         void Create(Book book);
         bool CheckDuplicate(string title, string genreName, string authorName, string publisherName);
-
-        Task<IQueryable<Book>> GetAllBooksAsync();
+        IQueryable<Book> GetAllBooks();
+        Task<IQueryable<Book>> GetFilteredBooksAsync(IQueryable<Book> query);
     }
 }

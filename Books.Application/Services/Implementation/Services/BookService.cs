@@ -1,8 +1,6 @@
 ﻿using Books.Application.Services.Contracts.Services;
 using Books.DataAccess.Repositories.Contracts;
-using Books.Domain;
 using Books.Domain.Entities;
-using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 
 namespace Books.Application.Services.Implementation.Services
@@ -21,7 +19,7 @@ namespace Books.Application.Services.Implementation.Services
             if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
             {
                 throw new ArgumentException("Title, AuthorName, GenreName or PublisherName cannot be null or empty.");
-            }   
+            }
 
             var existBook = _repositoryManager.Book.CheckDuplicate(title, genreName, authorName, publisherName);
 
@@ -48,75 +46,42 @@ namespace Books.Application.Services.Implementation.Services
             await _repositoryManager.SaveAsync();
         }
 
-        public async Task<List<Book>> GetBooksAsync(FilterConditions filterConditions)
+        public async Task<IQueryable<Book>> GetFilteredBooksAsync(FilterConditions filterConditions)
         {
-            var result = new List<Book>();
+            var query = _repositoryManager.Book.GetAllBooks();
 
-            var allBooks = await _repositoryManager.Book.GetAllBooksAsync();
-
-
-
-
-            if (filterConditions != null)
+            if(filterConditions != null)
             {
-                if (filterConditions.BookName != null)
+                if(filterConditions.BookName != null && filterConditions.BookName.Any())
                 {
-                    foreach (var bookName in filterConditions.BookName)
-                    {
-                        var books = allBooks.Where(b => b.Title == bookName).ToList();
-                        result.AddRange(books);
-                    }
+                    query = query.Where(b => filterConditions.BookName.Contains(b.Title));
                 }
-                if (filterConditions.AuthorName != null)
+                if(filterConditions.AuthorName != null && filterConditions.AuthorName.Any())
                 {
-                    foreach (var authorName in filterConditions.AuthorName)
-                    {
-                        var books = allBooks.Where(b => b.Author.Name == authorName).ToList();
-                        result.AddRange(books);
-                    }
+                    query = query.Where(b => filterConditions.AuthorName.Contains(b.Author.Name));
                 }
-                if (filterConditions.GenreName != null)
+                if(filterConditions.GenreName != null && filterConditions.GenreName.Any())
                 {
-                    foreach (var genreName in filterConditions.GenreName)
-                    {
-                        var books = allBooks.Where(b => b.Genre.Name == genreName).ToList();
-                        result.AddRange(books);
-                    }
+                    query = query.Where(b => filterConditions.GenreName.Contains(b.Genre.Name));
                 }
-                if (filterConditions.PublisherName != null)
+                if(filterConditions.PublisherName != null && filterConditions.PublisherName.Any())
                 {
-                    foreach (var publisherName in filterConditions.GenreName)
-                    {
-                        var books = allBooks.Where(b => b.Title == publisherName).ToList();
-                        result.AddRange(books);
-                    }
+                    query = query.Where(b => filterConditions.PublisherName.Contains(b.Publisher.Name));
                 }
-                if (filterConditions.PageNumber != null)
+                if(filterConditions.PageNumber != null && filterConditions.PageNumber.Any())
                 {
-                    foreach (var pageNumber in filterConditions.PageNumber)
-                    {
-                        int.TryParse(pageNumber, out int page);
-                        var books = allBooks.Where(b => b.Pages.Value == page).ToList();
-                        result.AddRange(books);
-                    }
+                    var pageNumber = filterConditions.PageNumber.Select(int.Parse).ToList();
+                    query = query.Where(b => pageNumber.Contains(b.Pages.Value));
                 }
-                if (filterConditions.ReleaseDate != null)
+                if(filterConditions.ReleaseDate != null && filterConditions.ReleaseDate.Any())
                 {
-                    foreach (var releaseDate in filterConditions.ReleaseDate)
-                    {
-                        DateTime.TryParse(releaseDate, out DateTime date);
-                        var books = allBooks.Where(b => b.ReleaseDate.Value == date).ToList();
-                        result.AddRange(books);
-                    }
+                    var date = filterConditions.ReleaseDate.Select(DateTime.Parse).ToList();
+                    query = query.Where(b => date.Contains(b.ReleaseDate.Value));
                 }
             }
-
-            return result;
+            
+            return await _repositoryManager.Book.GetFilteredBooksAsync(query);
         }
-
-
-
-
 
         private static string DateConverter(string releaseDate)
         {

@@ -2,6 +2,7 @@
 using Books.Application.Services.Contracts;
 using Books.Console;
 using Books.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -28,24 +29,17 @@ var filterConditions = new FilterConditions()
     ReleaseDate = startup.FilterConditions.ReleaseDate
 };
 
-var filteredList = await SearchingBook(filterConditions);
+var filteredBooks = await SearchingBook(filterConditions);
 
-foreach(var book in filteredList)
+foreach(var book in filteredBooks)
 {
     Console.WriteLine($"{book.Title}");
 }
 
 async Task<List<Book>> SearchingBook(FilterConditions filterConditions)
 {
-    var result = new List<Book>();
-
-    if (filterConditions != null)
-    {
-        var books = await serviceManager.BookService.GetBooksAsync(filterConditions);
-        result.AddRange(books);
-    }
-
-    return result.GroupBy(b => b.Title).Select(b => b.First()).ToList();
+    var filteredBooks = await serviceManager.BookService.GetFilteredBooksAsync(filterConditions);
+    return await filteredBooks.ToListAsync();
 }
 
 async Task PopulateDatabaseFromFile(string path)

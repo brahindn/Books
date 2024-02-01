@@ -17,6 +17,11 @@ namespace Books.DataAccess.Repositories.Implementation
             return RepositoryContext.Set<T>().Where(expression);
         }
 
+        public IQueryable<T> FindAll()
+        {
+            return RepositoryContext.Set<T>();
+        }
+
         public void Create(T entity)
         {
             RepositoryContext.Set<T>().Add(entity);
