@@ -15,7 +15,7 @@ namespace Books.Application.Services.Implementation.Services
 
         public async Task CreateAuthorAsync(string authorName)
         {
-            if (string.IsNullOrEmpty(authorName))
+            if (string.IsNullOrWhiteSpace(authorName))
             {
                 return;
             }
@@ -25,9 +25,9 @@ namespace Books.Application.Services.Implementation.Services
             await _repositoryManager.SaveAsync();
         }
 
-        public async Task<Author> GetAuthorAsync(string name)
+        public Task<Author> GetAuthorAsync(string name)
         {
-            return await _repositoryManager.Author.GetAuthorAsync(name);
+            return _repositoryManager.Author.GetAuthorAsync(name);
         }
     }
 }

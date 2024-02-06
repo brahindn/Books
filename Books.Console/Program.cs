@@ -4,6 +4,7 @@ using Books.Console;
 using Books.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 
 var startup = new Startup();
@@ -12,7 +13,7 @@ var services = new ServiceCollection();
 startup.ConfigerationServices(services);
 
 var serviceProvider = services.BuildServiceProvider();
-var serviceManager = serviceProvider.GetService<IServiceManager>();
+var serviceManager = serviceProvider.GetRequiredService<IServiceManager>();
 
 Console.WriteLine("Enter path to file");
 string path = Console.ReadLine();
@@ -38,7 +39,7 @@ foreach(var book in filteredBooks)
 
 async Task<List<Book>> SearchingBook(FilterConditions filterConditions)
 {
-    var filteredBooks = await serviceManager.BookService.GetFilteredBooksAsync(filterConditions);
+    var filteredBooks = serviceManager.BookService.GetFilteredBooksAsync(filterConditions);
     return await filteredBooks.ToListAsync();
 }
 
@@ -64,7 +65,8 @@ async Task PopulateDatabaseFromFile(string path)
         {
             string[] fields = line.Split(',');
             string errorFileName = $"{DateTime.Now:yyyyMMdd_HHmm}.txt";
-            string errorFilePath = Path.Combine(Directory.GetCurrentDirectory(), errorFileName);
+
+            Log.Logger = new LoggerConfiguration().WriteTo.File($"logs/{errorFileName}").CreateLogger();
 
             if (DataCheck(fields))
             {
@@ -75,15 +77,16 @@ async Task PopulateDatabaseFromFile(string path)
                 catch(Exception ex)
                 {
                     Console.WriteLine($"Something went wrong: {ex.Message}");
-                    File.AppendAllText(errorFilePath, line + Environment.NewLine);
+                    Log.Information(line);
                 }
             }
             else
             {
-                File.AppendAllText(errorFilePath, line + Environment.NewLine);
+                Log.Information(line);
             }
         }
     }
+    Log.CloseAndFlush();
 
     Console.WriteLine();
     Console.WriteLine("Press something to continue..." + "\n");
@@ -92,10 +95,15 @@ async Task PopulateDatabaseFromFile(string path)
 
 bool DataCheck(string[] fields)
 {
+    string title = fields[0];
+    string genre = fields[2];
+    string author = fields[4];
+    string publisher = fields[5];
+
     if (fields[1].Equals("Pages", StringComparison.OrdinalIgnoreCase))
     {
     return false;
     }
 
-    return fields[0] is string && fields[2] is string && fields[4] is string && fields[5] is string;
+    return title is string && genre is string && author is string && publisher is string;
 }

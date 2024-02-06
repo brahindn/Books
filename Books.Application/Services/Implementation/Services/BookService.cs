@@ -1,6 +1,7 @@
 ﻿using Books.Application.Services.Contracts.Services;
 using Books.DataAccess.Repositories.Contracts;
 using Books.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using System.Globalization;
 
 namespace Books.Application.Services.Implementation.Services
@@ -16,7 +17,7 @@ namespace Books.Application.Services.Implementation.Services
 
         public async Task CreateBookAsync(string title, string pages, string genreName, string releaseDate, string authorName, string publisherName)
         {
-            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(authorName) || string.IsNullOrEmpty(genreName) || string.IsNullOrEmpty(publisherName))
+            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(authorName) || string.IsNullOrWhiteSpace(genreName) || string.IsNullOrWhiteSpace(publisherName))
             {
                 throw new ArgumentException("Title, AuthorName, GenreName or PublisherName cannot be null or empty.");
             }
@@ -39,16 +40,16 @@ namespace Books.Application.Services.Implementation.Services
                 Genre = genre,
                 Author = author,
                 Publisher = publisher,
-                ReleaseDate = DateTime.TryParse(DateConverter(releaseDate), out DateTime date) ? date : null
+                ReleaseDate = DateConverter(releaseDate) ?? null
             };
 
             _repositoryManager.Book.Create(book);
             await _repositoryManager.SaveAsync();
         }
 
-        public async Task<IQueryable<Book>> GetFilteredBooksAsync(FilterConditions filterConditions)
+        public IQueryable<Book> GetFilteredBooksAsync(FilterConditions filterConditions)
         {
-            var query = _repositoryManager.Book.GetAllBooks();
+            var query = _repositoryManager.Book.FindAll();
 
             if(filterConditions != null)
             {
@@ -71,19 +72,27 @@ namespace Books.Application.Services.Implementation.Services
                 if(filterConditions.PageNumber != null && filterConditions.PageNumber.Any())
                 {
                     var pageNumber = filterConditions.PageNumber.Select(int.Parse).ToList();
-                    query = query.Where(b => pageNumber.Contains(b.Pages.Value));
+                    
+                    foreach(var number in pageNumber)
+                    {
+                        query = query.Where(b => b.Pages.Value == number);
+                    }
                 }
                 if(filterConditions.ReleaseDate != null && filterConditions.ReleaseDate.Any())
                 {
-                    var date = filterConditions.ReleaseDate.Select(DateTime.Parse).ToList();
-                    query = query.Where(b => date.Contains(b.ReleaseDate.Value));
+                    var releaseDate = filterConditions.ReleaseDate.Select(DateTime.Parse).ToList();
+
+                    foreach (var date in releaseDate)
+                    {
+                        query = query.Where(b => b.ReleaseDate.Value == date);
+                    }
                 }
             }
             
-            return await _repositoryManager.Book.GetFilteredBooksAsync(query);
+            return _repositoryManager.Book.GetFilteredBooksAsync(query);
         }
 
-        private static string DateConverter(string releaseDate)
+        private static DateTime? DateConverter(string releaseDate)
         {
             List<string> dateFormats = new List<string>();
 
@@ -94,15 +103,14 @@ namespace Books.Application.Services.Implementation.Services
 
             try
             {
-                var date = DateTime.ParseExact(releaseDate, dateFormats.ToArray(), CultureInfo.InvariantCulture);
                 var ukraineCulture = new CultureInfo("uk-UK");
+                var date = DateTime.ParseExact(releaseDate, dateFormats.ToArray(), ukraineCulture);
 
-                return date.ToString(ukraineCulture.DateTimeFormat);
+                return date;
             }
             catch
             {
-                var date = "";
-                return date;
+                return null;
             }
         }
     }

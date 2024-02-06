@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Books.DataAccess.Repositories.Implementation
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected RepositoryContext RepositoryContext;
 

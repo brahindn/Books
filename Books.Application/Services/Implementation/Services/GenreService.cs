@@ -15,7 +15,7 @@ namespace Books.Application.Services.Implementation.Services
 
         public async Task CreateGenreAsync(string genreName)
         {
-            if (string.IsNullOrEmpty(genreName))
+            if (string.IsNullOrWhiteSpace(genreName))
             {
                 return;
             }
@@ -25,9 +25,9 @@ namespace Books.Application.Services.Implementation.Services
             await _repositoryManager.SaveAsync();
         }
 
-        public async Task<Genre> GetGenreAsync(string name)
+        public Task<Genre> GetGenreAsync(string name)
         {
-            return await _repositoryManager.Genre.GetGenreAsync(name);
+            return _repositoryManager.Genre.GetGenreAsync(name);
         }
     }
 }

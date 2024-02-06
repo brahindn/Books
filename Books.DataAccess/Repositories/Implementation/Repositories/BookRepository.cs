@@ -20,12 +20,7 @@ namespace Books.DataAccess.Repositories.Implementation.Repositories
             return FindByCondition(expression).IsNullOrEmpty();
         }
 
-        public IQueryable<Book> GetAllBooks()
-        {
-            return FindAll();
-        }
-
-        public async Task<IQueryable<Book>> GetFilteredBooksAsync(IQueryable<Book> query)
+        public IQueryable<Book> GetFilteredBooksAsync(IQueryable<Book> query)
         {
             Expression<Func<Book, bool>> expression = b => query.Contains(b);
             return FindByCondition(expression);
