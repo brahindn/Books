@@ -6,6 +6,7 @@ using Books.Application.Services.Contracts;
 using Books.Application.Services.Implementation;
 using Books.DataAccess.Repositories.Contracts;
 using Books.DataAccess.Repositories.Implementation;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Books.Console.Extensions
 {
@@ -13,10 +14,9 @@ namespace Books.Console.Extensions
     {
         public static void ConfigureRepositoryManager(this IServiceCollection services) => services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+        public static void ConfigureSqlContext(this IServiceCollection services)
         {
-            services.AddDbContext<RepositoryContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                b => b.MigrationsAssembly("Books.Console")));
+            services.AddDbContext<RepositoryContext>();  
         }
 
         public static void ConfigureServiceManager(this IServiceCollection services) => services.AddScoped<IServiceManager, ServiceManager>();

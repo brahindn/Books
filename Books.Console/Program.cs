@@ -32,7 +32,7 @@ var filterConditions = new FilterConditions()
 
 var filteredBooks = await SearchingBook(filterConditions);
 
-foreach(var book in filteredBooks)
+foreach (var book in filteredBooks)
 {
     Console.WriteLine($"{book.Title}");
 }
@@ -74,7 +74,7 @@ async Task PopulateDatabaseFromFile(string path)
                 {
                     await serviceManager.BookService.CreateBookAsync(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5]);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Something went wrong: {ex.Message}");
                     Log.Information(line);
@@ -95,14 +95,14 @@ async Task PopulateDatabaseFromFile(string path)
 
 bool DataCheck(string[] fields)
 {
-    string title = fields[0];
-    string genre = fields[2];
-    string author = fields[4];
-    string publisher = fields[5];
+    var title = fields[0];
+    var genre = fields[2];
+    var author = fields[4];
+    var publisher = fields[5];
 
     if (fields[1].Equals("Pages", StringComparison.OrdinalIgnoreCase))
     {
-    return false;
+        return false;
     }
 
     return title is string && genre is string && author is string && publisher is string;

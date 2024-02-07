@@ -17,7 +17,7 @@ namespace Books.Tests
                 .UseInMemoryDatabase(databaseName: "TestDatabase")
                 .Options;
 
-            var context = new RepositoryContext(_options);
+            var context = new RepositoryContext();
             var repositoryManager = new RepositoryManager(context);
 
             _serviceManager = new ServiceManager(repositoryManager);
@@ -30,7 +30,7 @@ namespace Books.Tests
         {
             await _serviceManager.AuthorService.CreateAuthorAsync("Spange Bob");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Authors.Count());
                 Assert.AreEqual("Spange Bob", context.Authors.Single().Name);
@@ -42,7 +42,7 @@ namespace Books.Tests
         {
             await _serviceManager.AuthorService.CreateAuthorAsync(null);
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Authors.Count());
             }
@@ -53,7 +53,7 @@ namespace Books.Tests
         {
             await _serviceManager.AuthorService.CreateAuthorAsync(string.Empty);
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Authors.Count());
             }
@@ -64,7 +64,7 @@ namespace Books.Tests
         {
             await _serviceManager.GenreService.CreateGenreAsync("Horror");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Genres.Count());
                 Assert.AreEqual("Horror", context.Genres.Single().Name);
@@ -76,7 +76,7 @@ namespace Books.Tests
         {
             await _serviceManager.AuthorService.CreateAuthorAsync(null);
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Authors.Count());
             }
@@ -87,7 +87,7 @@ namespace Books.Tests
         {
             await _serviceManager.AuthorService.CreateAuthorAsync(string.Empty);
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Authors.Count());
             }
@@ -98,7 +98,7 @@ namespace Books.Tests
         {
             await _serviceManager.PublisherService.CreatePublisherAsync("City Classic");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Publishers.Count());
                 Assert.AreEqual("City Classic", context.Publishers.Single().Name);
@@ -110,7 +110,7 @@ namespace Books.Tests
         {
             await _serviceManager.PublisherService.CreatePublisherAsync(null);
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Publishers.Count());
             }
@@ -121,7 +121,7 @@ namespace Books.Tests
         {
             await _serviceManager.PublisherService.CreatePublisherAsync(string.Empty);
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Publishers.Count());
             }
@@ -132,7 +132,7 @@ namespace Books.Tests
         {
             await _serviceManager.BookService.CreateBookAsync("Title", "500", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Books.Count());
                 Assert.AreEqual(1, context.Authors.Count());
@@ -158,7 +158,7 @@ namespace Books.Tests
 
             }
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Books.Count());
             }
@@ -169,7 +169,7 @@ namespace Books.Tests
         {
             await _serviceManager.BookService.CreateBookAsync("Title", "", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Books.Count());
             }
@@ -180,7 +180,7 @@ namespace Books.Tests
         {
             await _serviceManager.BookService.CreateBookAsync("Title", "ABC", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Books.Count());
             }
@@ -191,7 +191,7 @@ namespace Books.Tests
         {
             await _serviceManager.BookService.CreateBookAsync("Title", "!@$", "Horror", "2017-12-10", "Spange Bob", "City Classic");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Books.Count());
             }
@@ -209,7 +209,7 @@ namespace Books.Tests
 
             }
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Books.Count());
             }
@@ -220,7 +220,7 @@ namespace Books.Tests
         {
             await _serviceManager.BookService.CreateBookAsync("Title", "500", "Horror", "", "Spange Bob", "City Classic");
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(1, context.Books.Count());
             }
@@ -238,7 +238,7 @@ namespace Books.Tests
 
             }
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Books.Count());
             }
@@ -256,7 +256,7 @@ namespace Books.Tests
 
             }
 
-            using (var context = new RepositoryContext(_options))
+            using (var context = new RepositoryContext())
             {
                 Assert.AreEqual(0, context.Books.Count());
             }
