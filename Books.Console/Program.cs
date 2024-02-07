@@ -10,7 +10,7 @@ using Serilog;
 var startup = new Startup();
 var services = new ServiceCollection();
 
-startup.ConfigerationServices(services);
+startup.ConfigureServices(services);
 
 var serviceProvider = services.BuildServiceProvider();
 var serviceManager = serviceProvider.GetRequiredService<IServiceManager>();

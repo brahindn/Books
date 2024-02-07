@@ -25,11 +25,11 @@ namespace Books.Console
 
        
 
-        public void ConfigerationServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            var optionBuilder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseSqlServer(Config.GetConnectionString("sqlConnection"),
-                b => b.MigrationsAssembly("Books_New.Console"));
+            //var optionBuilder = new DbContextOptionsBuilder<RepositoryContext>()
+                //.UseSqlServer(Config.GetConnectionString("sqlConnection"),
+                //b => b.MigrationsAssembly("Books_New.Console"));
 
             services.AddSingleton(Config);
             services.ConfigureRepositoryManager();
